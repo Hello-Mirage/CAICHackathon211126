@@ -24,7 +24,7 @@ const ConstructionSiteCanvas = dynamic(
 );
 
 export default function Site3DPage() {
-  const { selectedAsset, setSelectedAsset, setSelectedProject } = useProcurementStore();
+  const { selectedAsset, setSelectedAsset, setSelectedProject, setRawInputDraft, setStep } = useProcurementStore();
 
   const siteAssets = [
     {
@@ -84,6 +84,9 @@ export default function Site3DPage() {
   const handleLaunchCopilot = () => {
     setSelectedProject(currentActive.project);
     setSelectedAsset(currentActive as any);
+    const draft = `${currentActive.name}\nScope: ${currentActive.scope}\n${currentActive.description}\nQuantities:\n${currentActive.quantities.map((q) => `- ${q.item}: ${q.qty} (Code: ${q.code})`).join("\n")}`;
+    setRawInputDraft(draft);
+    setStep(1);
   };
 
   return (

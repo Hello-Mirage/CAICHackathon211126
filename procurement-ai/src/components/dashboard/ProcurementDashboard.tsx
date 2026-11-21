@@ -34,10 +34,17 @@ export default function ProcurementDashboard() {
     step6Recommendation,
     setStep6Recommendation,
     resetPipeline,
+    rawInputDraft,
   } = useProcurementStore();
 
   const [copied, setCopied] = useState(false);
-  const [rawInputText, setRawInputText] = useState("");
+  const [rawInputText, setRawInputText] = useState(rawInputDraft || "");
+
+  React.useEffect(() => {
+    if (rawInputDraft) {
+      setRawInputText(rawInputDraft);
+    }
+  }, [rawInputDraft]);
 
   // STEP 1 RUNNER: Ingest raw text and parse with AI
   const runStep1 = async () => {
@@ -69,7 +76,7 @@ export default function ProcurementDashboard() {
           ],
         });
       }
-      setStep(2);
+      // Stay on step 1 so user can review the card before proceeding!
     } catch (e) {
       console.error(e);
       alert("Failed to parse requirement. Please check input.");
@@ -106,7 +113,7 @@ export default function ProcurementDashboard() {
           }))
         );
       }
-      setStep(3);
+      // Stay on step 2 so user can review the ERP matches card before proceeding!
     } catch (e) {
       console.error(e);
       alert("Failed to match ERP codes.");
@@ -143,7 +150,7 @@ export default function ProcurementDashboard() {
           ],
         });
       }
-      setStep(4);
+      // Stay on step 3 so user can review the RFQ email card before proceeding!
     } catch (e) {
       console.error(e);
       alert("Failed to draft RFQ.");

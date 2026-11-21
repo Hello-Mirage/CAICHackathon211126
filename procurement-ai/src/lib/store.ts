@@ -37,6 +37,7 @@ export interface ProcurementState {
   step4NormalizedQuotes: any[] | null;
   step5Comparative: any | null;
   step6Recommendation: any | null;
+  rawInputDraft: string;
 
   // Actions
   setSelectedProject: (proj: string) => void;
@@ -46,6 +47,7 @@ export interface ProcurementState {
   setStep: (step: number) => void;
   setLoading: (loading: boolean) => void;
   setError: (err: string | null) => void;
+  setRawInputDraft: (text: string) => void;
   setStep1Requirement: (data: any) => void;
   setStep2MatchedCodes: (data: any) => void;
   setStep3RFQ: (data: any) => void;
@@ -106,6 +108,7 @@ export const useProcurementStore = create<ProcurementState>((set) => ({
   step4NormalizedQuotes: null,
   step5Comparative: null,
   step6Recommendation: null,
+  rawInputDraft: "",
 
   setSelectedProject: (proj) => set({ selectedProject: proj }),
   setSelectedAsset: (asset) => set({ selectedAsset: asset, isDrawerOpen: !!asset }),
@@ -114,6 +117,7 @@ export const useProcurementStore = create<ProcurementState>((set) => ({
   setStep: (step) => set({ currentStep: step }),
   setLoading: (loading) => set({ isLoading: loading }),
   setError: (err) => set({ error: err }),
+  setRawInputDraft: (text) => set({ rawInputDraft: text }),
 
   setStep1Requirement: (data) => set({ step1Requirement: data }),
   setStep2MatchedCodes: (data) => set({ step2MatchedCodes: data }),
