@@ -5,9 +5,19 @@ import path from "path";
 const DATA_DIR = path.join(process.cwd(), "data");
 
 function loadJSON(filename: string) {
-  const filepath = path.join(DATA_DIR, filename);
-  const raw = fs.readFileSync(filepath, "utf-8");
-  return JSON.parse(raw);
+  try {
+    const filepath = path.join(DATA_DIR, filename);
+    if (fs.existsSync(filepath)) {
+      return JSON.parse(fs.readFileSync(filepath, "utf-8"));
+    }
+  } catch {}
+  try {
+    const fallback = path.join(process.cwd(), "procurement-ai", "data", filename);
+    if (fs.existsSync(fallback)) {
+      return JSON.parse(fs.readFileSync(fallback, "utf-8"));
+    }
+  } catch {}
+  return {};
 }
 
 export interface ERPItemCode {

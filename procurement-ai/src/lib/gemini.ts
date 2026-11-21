@@ -1,9 +1,8 @@
 // Gemini API client for AI procurement logic
 import { buildRAGContext, getERPItemCodes } from "./data";
 
-function getGeminiUrl() {
+function getGeminiUrl(model = "gemini-2.0-flash") {
   const key = process.env.GEMINI_API_KEY || "";
-  const model = "gemini-2.0-flash";
   return `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`;
 }
 
@@ -21,39 +20,49 @@ async function callGemini(systemPrompt: string, userPrompt: string): Promise<str
     throw new Error("GEMINI_API_KEY is not configured with a valid key");
   }
 
-  const url = getGeminiUrl();
-  const response = await fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      system_instruction: {
-        parts: [{ text: systemPrompt }],
-      },
-      contents: [
-        {
-          role: "user",
-          parts: [{ text: userPrompt }],
-        },
-      ],
-      generationConfig: {
-        temperature: 0.2,
-        maxOutputTokens: 4096,
-        responseMimeType: "application/json",
-      },
-    }),
-  });
+  const models = ["gemini-2.0-flash", "gemini-1.5-flash", "gemini-1.5-pro"];
+  let lastErr = "";
 
-  if (!response.ok) {
-    const err = await response.text();
-    throw new Error(`Gemini API error: ${response.status} - ${err}`);
+  for (const model of models) {
+    try {
+      const url = getGeminiUrl(model);
+      const response = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          system_instruction: {
+            parts: [{ text: systemPrompt }],
+          },
+          contents: [
+            {
+              role: "user",
+              parts: [{ text: userPrompt }],
+            },
+          ],
+          generationConfig: {
+            temperature: 0.2,
+            maxOutputTokens: 4096,
+            responseMimeType: "application/json",
+          },
+        }),
+      });
+
+      if (!response.ok) {
+        lastErr = await response.text();
+        console.warn(`Gemini model ${model} returned ${response.status}: ${lastErr}`);
+        continue;
+      }
+
+      const data: GeminiResponse = await response.json();
+      const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text || "{}";
+      const cleaned = rawText.replace(/^```json\s*/i, "").replace(/```\s*$/i, "").trim();
+      return cleaned;
+    } catch (e) {
+      lastErr = String(e);
+    }
   }
 
-  const data: GeminiResponse = await response.json();
-  const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text || "{}";
-  
-  // Clean markdown code fence if returned
-  const cleaned = rawText.replace(/^```json\s*/i, "").replace(/```\s*$/i, "").trim();
-  return cleaned;
+  throw new Error(`All Gemini models failed: ${lastErr}`);
 }
 
 // Intelligent local requirement parser (runs offline or if API key is not set)
