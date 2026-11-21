@@ -126,16 +126,14 @@ export default function KolkataSiteMap() {
 
       L.control.zoom({ position: "topright" }).addTo(map);
 
-      // Fast, zero-lag global tile layer (CartoDB Voyager + OSM data) with active buffering
-      const tileLayer = L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png", {
+      // Official OpenStreetMap Standard Tiles (No API key needed)
+      const tileLayer = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         maxZoom: 19,
-        subdomains: "abcd",
         keepBuffer: 8,
         updateWhenIdle: false,
         updateWhenZooming: true,
-        updateInterval: 100,
         attribution:
-          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/">CARTO</a>',
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       }).addTo(map);
 
       mapInstanceRef.current = map;
