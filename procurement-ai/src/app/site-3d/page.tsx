@@ -97,42 +97,7 @@ export default function Site3DPage() {
       </div>
 
       {/* Top Floating Control Bar */}
-      <div className="absolute top-4 left-4 right-4 z-10 flex flex-wrap items-center justify-between gap-3 pointer-events-none">
-        {/* Left Badge & Asset Switcher */}
-        <div
-          className="pointer-events-auto p-2 rounded-2xl border backdrop-blur-md shadow-lg flex items-center gap-2"
-          style={{
-            backgroundColor: "var(--bg-card)",
-            borderColor: "var(--border-muted)",
-          }}
-        >
-          <div
-            className="w-8 h-8 rounded-xl flex items-center justify-center font-bold text-white shadow-sm"
-            style={{ backgroundColor: "var(--primary-accent)" }}
-          >
-            <Compass className="w-4 h-4" />
-          </div>
-
-          <div className="flex items-center gap-1">
-            {siteAssets.map((asset) => {
-              const isSelected = currentActive.id === asset.id;
-              return (
-                <button
-                  key={asset.id}
-                  onClick={() => setSelectedAsset(asset as any)}
-                  className="px-3 py-1.5 rounded-xl text-xs font-bold transition-all"
-                  style={{
-                    backgroundColor: isSelected ? "var(--primary-accent)" : "transparent",
-                    color: isSelected ? "#ffffff" : "var(--text-primary)",
-                  }}
-                >
-                  {asset.name.split(" ")[1] || asset.name}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
+      <div className="absolute top-4 left-4 right-4 z-10 flex flex-wrap items-center justify-end gap-3 pointer-events-none">
         {/* Right Helper Pill */}
         <div
           className="pointer-events-auto hidden md:flex items-center gap-3 px-4 py-2 rounded-2xl border backdrop-blur-md shadow-lg text-xs"
