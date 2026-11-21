@@ -112,7 +112,7 @@ export default function Site3DPage() {
         >
           <span className="flex items-center gap-1.5">
             <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: "var(--good)" }}></span>
-            <strong>3D Digital Twin Active</strong>
+            <strong>3D View Active</strong>
           </span>
           <span style={{ color: "var(--muted)" }}>• Left Click + Drag: Rotate | Right Click: Pan | Scroll: Zoom</span>
         </div>

@@ -4,6 +4,9 @@ const nextConfig: NextConfig = {
   /* config options here */
   cacheComponents: true,
   partialPrefetching: true,
+  experimental: {
+    cpus: 1,
+  },
   turbopack: {
     rules: {
       "*.css": {
@@ -15,3 +18,4 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
+

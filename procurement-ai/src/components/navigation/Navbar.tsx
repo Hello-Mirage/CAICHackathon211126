@@ -23,7 +23,8 @@ export default function Navbar() {
 
   const navLinks = [
     { href: "/dashboard", label: "Procure" },
-    { href: "/site-3d", label: "3D digital twin" },
+    { href: "/site-3d", label: "3D View" },
+    { href: "/map", label: "MapView" },
   ];
 
   return (

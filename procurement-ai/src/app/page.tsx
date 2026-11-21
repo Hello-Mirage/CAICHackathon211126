@@ -154,7 +154,7 @@ export default function LandingPage() {
                 }}
               >
                 <Box className="w-4 h-4" />
-                <span>Explore 3D Digital Twin</span>
+                <span>Explore 3D View</span>
               </Link>
             </div>
 
