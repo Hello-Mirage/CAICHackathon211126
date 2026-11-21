@@ -11,7 +11,14 @@ export interface SelectedAsset {
   requirementsCount: number;
 }
 
+export type ThemeMode = "light" | "dark";
+
 export interface ProcurementState {
+  // Theme
+  theme: ThemeMode;
+  toggleTheme: () => void;
+  setTheme: (t: ThemeMode) => void;
+
   // 3D & Selection
   selectedProject: string;
   selectedAsset: SelectedAsset | null;
@@ -49,6 +56,41 @@ export interface ProcurementState {
 }
 
 export const useProcurementStore = create<ProcurementState>((set) => ({
+  // Default dark mode (slate & ocean blue palette: #1B262C, #0F4C75, #3282B8, #BBE1FA)
+  theme: "dark",
+  toggleTheme: () =>
+    set((state) => {
+      const nextTheme = state.theme === "dark" ? "light" : "dark";
+      if (typeof window !== "undefined") {
+        localStorage.setItem("vinayak_theme", nextTheme);
+        if (nextTheme === "light") {
+          document.documentElement.classList.add("light");
+          document.documentElement.classList.remove("dark");
+          document.documentElement.setAttribute("data-theme", "light");
+        } else {
+          document.documentElement.classList.add("dark");
+          document.documentElement.classList.remove("light");
+          document.documentElement.setAttribute("data-theme", "dark");
+        }
+      }
+      return { theme: nextTheme };
+    }),
+  setTheme: (t) => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("vinayak_theme", t);
+      if (t === "light") {
+        document.documentElement.classList.add("light");
+        document.documentElement.classList.remove("dark");
+        document.documentElement.setAttribute("data-theme", "light");
+      } else {
+        document.documentElement.classList.add("dark");
+        document.documentElement.classList.remove("light");
+        document.documentElement.setAttribute("data-theme", "dark");
+      }
+    }
+    set({ theme: t });
+  },
+
   selectedProject: "Vinayak Amara",
   selectedAsset: null,
   isDrawerOpen: false,

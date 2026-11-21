@@ -1,8 +1,4 @@
-// Normalized quotation parser & comparator with deterministic fallback
-import fs from "fs";
-import path from "path";
-import { getERPItemCodes, getProcurementSOP, getVendorList, getSiteRequirements, getWaterproofingQuantities } from "./data";
-
+// Normalized quotation parser & comparator with deterministic logic and fallback
 export interface NormalizedQuoteItem {
   sl_no: number;
   item_code: string;
