@@ -19,9 +19,9 @@ export default function RootLayout({
       className="h-full antialiased dark"
       data-theme="dark"
     >
-      <body className="min-h-full flex flex-col font-sans transition-colors duration-200">
+      <body className="h-full min-h-screen flex flex-col font-sans transition-colors duration-200">
         <Navbar />
-        <main className="flex-1 flex flex-col">{children}</main>
+        <main className="flex-1 flex flex-col min-h-0 w-full">{children}</main>
       </body>
     </html>
   );

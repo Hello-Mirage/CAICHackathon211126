@@ -126,14 +126,25 @@ export default function KolkataSiteMap() {
 
       L.control.zoom({ position: "topright" }).addTo(map);
 
-      // OpenStreetMap Standard Tiles
-      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      // Fast, reliable global tile layer (CartoDB Voyager + OSM data) with zero API key
+      L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", {
         maxZoom: 19,
+        subdomains: "abcd",
         attribution:
-          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/">CARTO</a>',
       }).addTo(map);
 
       mapInstanceRef.current = map;
+
+      // Invalidate size after layout settles to guarantee visibility
+      setTimeout(() => { if (isMounted && map) map.invalidateSize(); }, 100);
+      setTimeout(() => { if (isMounted && map) map.invalidateSize(); }, 350);
+      setTimeout(() => { if (isMounted && map) map.invalidateSize(); }, 1000);
+
+      const handleResize = () => {
+        if (mapInstanceRef.current) mapInstanceRef.current.invalidateSize();
+      };
+      window.addEventListener("resize", handleResize);
 
       // Add custom SVG icon markers
       VINAYAK_LOCATIONS.forEach((loc) => {
@@ -153,7 +164,7 @@ export default function KolkataSiteMap() {
             cursor: pointer;
             transition: transform 0.2s ease;
           ">
-            <span style="color: ${loc.id === "amara" ? "#2a1d05" : "#ffffff"}; font-weight: bold; font-size: 14px;">
+            <span style="color: ${loc.id === "amara" ? "#2a1d05" : "#ffffff"}; font-weight: bold; font-size: 13px;">
               ${loc.id === "hq" ? "HQ" : loc.name.slice(8, 10).toUpperCase()}
             </span>
             ${
@@ -330,13 +341,33 @@ export default function KolkataSiteMap() {
         </div>
       </div>
 
+      {/* Leaflet CSS guarantee */}
+      <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        crossOrigin=""
+      />
+
       {/* Right Map Canvas Container */}
-      <div className="flex-1 relative w-full h-[450px] md:h-full">
+      <div
+        className="flex-1 relative w-full h-[550px] md:h-full min-h-[550px]"
+        style={{ height: "100%", minHeight: "550px" }}
+      >
         {/* Map Container */}
-        <div ref={mapContainerRef} className="w-full h-full z-0" />
+        <div
+          ref={mapContainerRef}
+          className="w-full h-full min-h-[550px] z-0"
+          style={{ width: "100%", height: "100%", minHeight: "550px", background: "#0a2227" }}
+        />
 
         {/* Floating Quick Action Overlay */}
-        <div className="absolute top-4 left-4 z-10 hidden sm:flex items-center gap-2 p-1.5 rounded-xl border backdrop-blur-md shadow-lg text-xs" style={{ background: "var(--panel)", borderColor: "var(--line)" }}>
+        <div
+          className="absolute top-4 left-4 z-[400] hidden sm:flex items-center gap-2 p-1.5 rounded-xl border backdrop-blur-md shadow-lg text-xs"
+          style={{ background: "var(--panel)", borderColor: "var(--line)" }}
+        >
+          <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded" style={{ background: "var(--raise)", color: "var(--accent)" }}>
+            Fly To:
+          </span>
           <button
             onClick={() => handleFlyTo(VINAYAK_LOCATIONS[0])}
             className="px-2.5 py-1 rounded hover:opacity-80 transition-all font-semibold"
