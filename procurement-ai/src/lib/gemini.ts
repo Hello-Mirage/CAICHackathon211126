@@ -1,9 +1,11 @@
 // Gemini API client for AI procurement logic
 import { buildRAGContext } from "./data";
 
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY || "";
-const GEMINI_MODEL = "gemini-2.0-flash";
-const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
+function getGeminiUrl() {
+  const key = process.env.GEMINI_API_KEY || "";
+  const model = "gemini-2.0-flash";
+  return `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`;
+}
 
 interface GeminiResponse {
   candidates?: {
@@ -14,7 +16,13 @@ interface GeminiResponse {
 }
 
 async function callGemini(systemPrompt: string, userPrompt: string): Promise<string> {
-  const response = await fetch(GEMINI_URL, {
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey) {
+    throw new Error("GEMINI_API_KEY environment variable is not set");
+  }
+
+  const url = getGeminiUrl();
+  const response = await fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -28,7 +36,7 @@ async function callGemini(systemPrompt: string, userPrompt: string): Promise<str
         },
       ],
       generationConfig: {
-        temperature: 0.3,
+        temperature: 0.2,
         maxOutputTokens: 4096,
         responseMimeType: "application/json",
       },
@@ -41,8 +49,11 @@ async function callGemini(systemPrompt: string, userPrompt: string): Promise<str
   }
 
   const data: GeminiResponse = await response.json();
-  const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
-  return text;
+  const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text || "{}";
+  
+  // Clean markdown code fence if returned
+  const cleaned = rawText.replace(/^```json\s*/i, "").replace(/```\s*$/i, "").trim();
+  return cleaned;
 }
 
 // STEP 1: Capture & structure a site requirement
