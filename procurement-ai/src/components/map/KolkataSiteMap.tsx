@@ -126,25 +126,41 @@ export default function KolkataSiteMap() {
 
       L.control.zoom({ position: "topright" }).addTo(map);
 
-      // Fast, reliable global tile layer (CartoDB Voyager + OSM data) with zero API key
-      L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", {
+      // Fast, zero-lag global tile layer (CartoDB Voyager + OSM data) with active buffering
+      const tileLayer = L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png", {
         maxZoom: 19,
         subdomains: "abcd",
+        keepBuffer: 8,
+        updateWhenIdle: false,
+        updateWhenZooming: true,
+        updateInterval: 100,
         attribution:
           '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/">CARTO</a>',
       }).addTo(map);
 
       mapInstanceRef.current = map;
 
-      // Invalidate size after layout settles to guarantee visibility
-      setTimeout(() => { if (isMounted && map) map.invalidateSize(); }, 100);
-      setTimeout(() => { if (isMounted && map) map.invalidateSize(); }, 350);
-      setTimeout(() => { if (isMounted && map) map.invalidateSize(); }, 1000);
+      // Invalidate size immediately and on continuous container resizes
+      map.invalidateSize();
+      setTimeout(() => { if (isMounted && map) map.invalidateSize({ pan: false }); }, 50);
+      setTimeout(() => { if (isMounted && map) map.invalidateSize({ pan: false }); }, 200);
+      setTimeout(() => { if (isMounted && map) map.invalidateSize({ pan: false }); }, 600);
 
       const handleResize = () => {
-        if (mapInstanceRef.current) mapInstanceRef.current.invalidateSize();
+        if (mapInstanceRef.current) mapInstanceRef.current.invalidateSize({ pan: false });
       };
       window.addEventListener("resize", handleResize);
+
+      // Automatic zero-lag ResizeObserver to fill any gray areas instantly
+      let resizeObserver: ResizeObserver | null = null;
+      if (typeof ResizeObserver !== "undefined" && mapContainerRef.current) {
+        resizeObserver = new ResizeObserver(() => {
+          if (mapInstanceRef.current) {
+            mapInstanceRef.current.invalidateSize({ pan: false });
+          }
+        });
+        resizeObserver.observe(mapContainerRef.current);
+      }
 
       // Add custom SVG icon markers
       VINAYAK_LOCATIONS.forEach((loc) => {
@@ -350,14 +366,20 @@ export default function KolkataSiteMap() {
 
       {/* Right Map Canvas Container */}
       <div
-        className="flex-1 relative w-full h-[550px] md:h-full min-h-[550px]"
-        style={{ height: "100%", minHeight: "550px" }}
+        className="flex-1 relative w-full h-full min-h-[450px]"
+        style={{ height: "100%", width: "100%" }}
       >
         {/* Map Container */}
         <div
           ref={mapContainerRef}
-          className="w-full h-full min-h-[550px] z-0"
-          style={{ width: "100%", height: "100%", minHeight: "550px", background: "#0a2227" }}
+          className="z-0"
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            background: "#0a2227",
+          }}
         />
 
         {/* Floating Quick Action Overlay */}

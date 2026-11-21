@@ -18,7 +18,7 @@ const KolkataSiteMap = dynamic(
 
 export default function MapViewPage() {
   return (
-    <div className="flex-1 flex flex-col w-full h-[calc(100vh-4rem)] min-h-[600px]">
+    <div className="flex-1 flex flex-col w-full h-[calc(100vh-4rem)] overflow-hidden">
       <KolkataSiteMap />
     </div>
   );
