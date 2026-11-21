@@ -290,12 +290,73 @@ Return JSON:
 
   const proj = (requirement as any)?.project || "Vinayak Project Site";
   const cat = (requirement as any)?.category || "Scope";
+  const projLower = proj.toLowerCase();
+  const catLower = cat.toLowerCase();
+
+  if (projLower.includes("aquina") || catLower.includes("road") || catLower.includes("paver")) {
+    return {
+      subject: `INVITATION TO TENDER: Vinayak Aquina — Heavy Duty Road Network (45MT Paver & Drainage)`,
+      vendors: [
+        "Matur Enterprise (Rajat Da)",
+        "Bengal Roadways & Civil Infraworks",
+        "Eastern Pavers & Concrete LLP",
+        "New Town Aggregates Ltd",
+      ],
+      terms: [
+        "1. 80mm M-40 interlocking paver blocks with compulsory 28-day compression test.",
+        "2. 45 MT axle load design capacity certificate mandatory.",
+        "3. 150mm WMM subbase course compaction using 8-10 ton vibratory roller.",
+        "4. 5% retention for 18-month maintenance defect liability period.",
+        "5. GST extra as applicable (18%). Strict compliance with Farvision ERP gate entry.",
+        "6. Safety barricading and detour maintenance under Contractor scope.",
+      ],
+    };
+  }
+
+  if (projLower.includes("vista") || catLower.includes("concrete") || catLower.includes("superstructure")) {
+    return {
+      subject: `INVITATION TO TENDER: Vinayak Vista — Superstructure Ready-Mix Concrete (M-35) & Pumping`,
+      vendors: [
+        "Ultratech Concrete Direct",
+        "ACC RMC Kolkata",
+        "Nuvoco Vistas Ready-Mix",
+        "Star Ready-Mix Bengal",
+      ],
+      terms: [
+        "1. Dedicated transit mixer fleet with boom pump delivery at 22m pour height.",
+        "2. Cube sampling at site and independent NABL accredited lab test reports.",
+        "3. Slump tolerance strictly maintained at 120mm ± 25mm at pour point.",
+        "4. 30-day credit from monthly billing against joint pour verification.",
+        "5. Valid GST e-way bill mandatory for Farvision material inward.",
+        "6. Admixtures and retarders must strictly conform to IS 9103 specifications.",
+      ],
+    };
+  }
+
+  if (projLower.includes("citrus") || catLower.includes("glazing") || catLower.includes("aluminium")) {
+    return {
+      subject: `INVITATION TO TENDER: Vinayak Citrus — Architectural Aluminium Windows & Glazing`,
+      vendors: [
+        "Kolkata Glazing Works",
+        "Modern Aluminium Systems",
+        "Apex Architectural Hardware",
+        "Bengal Glass & Facades",
+      ],
+      terms: [
+        "1. 25-micron anodized heavy architectural aluminium sections (Jindal/Hindalco).",
+        "2. 8mm toughened safety glass conforming to IS 2553 standards.",
+        "3. 5-year leak-proof silicon weather-sealing performance warranty.",
+        "4. 5% security retention for 12 months post-handover.",
+        "5. Statutory PF, ESI, and site safety harness compliance mandatory.",
+      ],
+    };
+  }
 
   return {
     subject: `SEEKING COMMERCIAL QUOTATIONS: ${proj} — ${cat}`,
     vendors: [
-      "Bajrang Construction",
       "Purvyakruti Sales & Services",
+      "Bajrang Construction",
       "SK Construction",
       "Shyama Waterproofing",
     ],
@@ -304,8 +365,8 @@ Return JSON:
       "2. TDS will be deducted as per Government income tax norms.",
       "3. 5% Security Deposit will be retained and released after 12 months defect liability period.",
       "4. GST extra as applicable (18%). Rates must be strictly exclusive of GST.",
-      "5. Water and Electricity will be provided at a single designated tapping point at site.",
-      "6. Safety PPE cost and site compliance under Contractor's sole scope.",
+      "5. 7-day water ponding test mandatory before laying protective screed.",
+      "6. 10-year joint guarantee certificate with chemical manufacturer.",
     ],
   };
 }

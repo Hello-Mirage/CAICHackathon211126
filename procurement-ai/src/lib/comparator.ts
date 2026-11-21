@@ -115,23 +115,214 @@ export function getPreparsedAmaraQuotations(): NormalizedVendorQuote[] {
   ];
 }
 
+// 4 Verified Vendor Quotations for Aquina Road & Infrastructure
+export function getAquinaQuotations(): NormalizedVendorQuote[] {
+  return [
+    {
+      vendor_name: "Matur Enterprise (Rajat Da)",
+      quote_ref: "ME/AQN/RD/2026-01",
+      date: "14.05.2026",
+      subtotal: 1563559,
+      gst_percent: 18,
+      gst_amount: 281441,
+      grand_total: 1845000,
+      payment_terms: "30 days credit post compaction test, 5% retention for 18 mos",
+      delivery_time: "Commence in 5 days, 45 days completion",
+      past_performance_score: 90,
+      past_projects_completed: 8,
+      quality_rating: 4.7,
+      items: [
+        { sl_no: 1, item_code: "RD.01", description: "80mm M-40 Interlocking Paver Blocks", unit: "SQM", quantity: 1450, unit_rate: 680, amount: 986000 },
+        { sl_no: 2, item_code: "RD.02", description: "150mm WMM Subbase Course", unit: "CUM", quantity: 218, unit_rate: 1450, amount: 316100 },
+        { sl_no: 3, item_code: "RD.03", description: "Precast Concrete Kerb Stones", unit: "RMT", quantity: 350, unit_rate: 380, amount: 133000 },
+        { sl_no: 4, item_code: "RD.04", description: "Subgrade Compaction & Rolling", unit: "SQM", quantity: 1450, unit_rate: 88.6, amount: 128459 },
+      ],
+    },
+    {
+      vendor_name: "Bengal Roadways & Civil Infraworks",
+      quote_ref: "BRCI/AQN/089",
+      date: "16.05.2026",
+      subtotal: 1796610,
+      gst_percent: 18,
+      gst_amount: 323390,
+      grand_total: 2120000,
+      payment_terms: "15 days credit, 5% security retention",
+      delivery_time: "Commence in 10 days, 60 days completion",
+      past_performance_score: 84,
+      past_projects_completed: 5,
+      quality_rating: 4.3,
+      items: [
+        { sl_no: 1, item_code: "RD.01", description: "80mm M-40 Interlocking Paver Blocks", unit: "SQM", quantity: 1450, unit_rate: 760, amount: 1102000 },
+        { sl_no: 2, item_code: "RD.02", description: "150mm WMM Subbase Course", unit: "CUM", quantity: 218, unit_rate: 1720, amount: 374960 },
+        { sl_no: 3, item_code: "RD.03", description: "Precast Concrete Kerb Stones", unit: "RMT", quantity: 350, unit_rate: 450, amount: 157500 },
+        { sl_no: 4, item_code: "RD.04", description: "Subgrade Compaction & Rolling", unit: "SQM", quantity: 1450, unit_rate: 111.8, amount: 162150 },
+      ],
+    },
+    {
+      vendor_name: "Eastern Pavers & Concrete LLP",
+      quote_ref: "EPC/WB/2026/41",
+      date: "19.05.2026",
+      subtotal: 1932203,
+      gst_percent: 18,
+      gst_amount: 347797,
+      grand_total: 2280000,
+      payment_terms: "10% advance with PO, 20 days running bill cycle",
+      delivery_time: "Commence in 7 days, 50 days completion",
+      past_performance_score: 80,
+      past_projects_completed: 6,
+      quality_rating: 4.0,
+      items: [
+        { sl_no: 1, item_code: "RD.01", description: "80mm M-40 Interlocking Paver Blocks", unit: "SQM", quantity: 1450, unit_rate: 820, amount: 1189000 },
+        { sl_no: 2, item_code: "RD.02", description: "150mm WMM Subbase Course", unit: "CUM", quantity: 218, unit_rate: 1850, amount: 403300 },
+        { sl_no: 3, item_code: "RD.03", description: "Precast Concrete Kerb Stones", unit: "RMT", quantity: 350, unit_rate: 490, amount: 171500 },
+        { sl_no: 4, item_code: "RD.04", description: "Subgrade Compaction & Rolling", unit: "SQM", quantity: 1450, unit_rate: 116.1, amount: 168403 },
+      ],
+    },
+    {
+      vendor_name: "New Town Aggregates Ltd",
+      quote_ref: "NTA/RD-PKG/12",
+      date: "22.05.2026",
+      subtotal: 2025424,
+      gst_percent: 18,
+      gst_amount: 364576,
+      grand_total: 2390000,
+      payment_terms: "Against delivery challan, 5% retention",
+      delivery_time: "15 days mobilization, 60 days completion",
+      past_performance_score: 76,
+      past_projects_completed: 3,
+      quality_rating: 3.8,
+      items: [
+        { sl_no: 1, item_code: "RD.01", description: "80mm M-40 Interlocking Paver Blocks", unit: "SQM", quantity: 1450, unit_rate: 860, amount: 1247000 },
+        { sl_no: 2, item_code: "RD.02", description: "150mm WMM Subbase Course", unit: "CUM", quantity: 218, unit_rate: 1950, amount: 425100 },
+        { sl_no: 3, item_code: "RD.03", description: "Precast Concrete Kerb Stones", unit: "RMT", quantity: 350, unit_rate: 510, amount: 178500 },
+        { sl_no: 4, item_code: "RD.04", description: "Subgrade Compaction & Rolling", unit: "SQM", quantity: 1450, unit_rate: 120.5, amount: 174824 },
+      ],
+    },
+  ];
+}
+
+// 4 Verified Vendor Quotations for Vista Superstructure & Concrete
+export function getVistaQuotations(): NormalizedVendorQuote[] {
+  return [
+    {
+      vendor_name: "Ultratech Concrete Direct",
+      quote_ref: "UT/RMC/KOL/26-03",
+      date: "12.05.2026",
+      subtotal: 2898305,
+      gst_percent: 18,
+      gst_amount: 521695,
+      grand_total: 3420000,
+      payment_terms: "30 days credit from monthly billing, zero advance",
+      delivery_time: "Daily continuous dispatch, boom pump dedicated",
+      past_performance_score: 94,
+      past_projects_completed: 15,
+      quality_rating: 4.9,
+      items: [
+        { sl_no: 1, item_code: "RCC.01", description: "M-35 Grade Ready-Mix Concrete", unit: "CUM", quantity: 650, unit_rate: 4100, amount: 2665000 },
+        { sl_no: 2, item_code: "RCC.02", description: "Concrete Boom Pumping Deployment", unit: "CUM", quantity: 650, unit_rate: 280, amount: 182000 },
+        { sl_no: 3, item_code: "RCC.03", description: "Retarder & Plasticizer Admixture", unit: "CUM", quantity: 650, unit_rate: 65, amount: 42250 },
+        { sl_no: 4, item_code: "RCC.04", description: "Slump & Cube Testing (NABL Report)", unit: "SET", quantity: 24, unit_rate: 377.3, amount: 9055 },
+      ],
+    },
+    {
+      vendor_name: "ACC RMC Kolkata",
+      quote_ref: "ACC/VISTA/2026/77",
+      date: "15.05.2026",
+      subtotal: 3093220,
+      gst_percent: 18,
+      gst_amount: 556780,
+      grand_total: 3650000,
+      payment_terms: "21 days credit, monthly reconciliation",
+      delivery_time: "48-hr order notice, transit mixer fleet",
+      past_performance_score: 88,
+      past_projects_completed: 10,
+      quality_rating: 4.5,
+      items: [
+        { sl_no: 1, item_code: "RCC.01", description: "M-35 Grade Ready-Mix Concrete", unit: "CUM", quantity: 650, unit_rate: 4380, amount: 2847000 },
+        { sl_no: 2, item_code: "RCC.02", description: "Concrete Boom Pumping Deployment", unit: "CUM", quantity: 650, unit_rate: 310, amount: 201500 },
+        { sl_no: 3, item_code: "RCC.03", description: "Retarder & Plasticizer Admixture", unit: "CUM", quantity: 650, unit_rate: 55, amount: 35750 },
+        { sl_no: 4, item_code: "RCC.04", description: "Slump & Cube Testing (NABL Report)", unit: "SET", quantity: 24, unit_rate: 373.8, amount: 8970 },
+      ],
+    },
+    {
+      vendor_name: "Nuvoco Vistas Ready-Mix",
+      quote_ref: "NV/CON/KOL-02",
+      date: "18.05.2026",
+      subtotal: 3228814,
+      gst_percent: 18,
+      gst_amount: 581186,
+      grand_total: 3810000,
+      payment_terms: "15 days credit, 5% retention",
+      delivery_time: "Dedicated plant allotment",
+      past_performance_score: 82,
+      past_projects_completed: 7,
+      quality_rating: 4.2,
+      items: [
+        { sl_no: 1, item_code: "RCC.01", description: "M-35 Grade Ready-Mix Concrete", unit: "CUM", quantity: 650, unit_rate: 4580, amount: 2977000 },
+        { sl_no: 2, item_code: "RCC.02", description: "Concrete Boom Pumping Deployment", unit: "CUM", quantity: 650, unit_rate: 325, amount: 211250 },
+        { sl_no: 3, item_code: "RCC.03", description: "Retarder & Plasticizer Admixture", unit: "CUM", quantity: 650, unit_rate: 48, amount: 31200 },
+        { sl_no: 4, item_code: "RCC.04", description: "Slump & Cube Testing (NABL Report)", unit: "SET", quantity: 24, unit_rate: 390.2, amount: 9364 },
+      ],
+    },
+    {
+      vendor_name: "Star Ready-Mix Bengal",
+      quote_ref: "SRM/VISTA/99",
+      date: "21.05.2026",
+      subtotal: 3372881,
+      gst_percent: 18,
+      gst_amount: 607119,
+      grand_total: 3980000,
+      payment_terms: "10% advance, 14 days credit",
+      delivery_time: "Standby batching plant",
+      past_performance_score: 78,
+      past_projects_completed: 4,
+      quality_rating: 3.9,
+      items: [
+        { sl_no: 1, item_code: "RCC.01", description: "M-35 Grade Ready-Mix Concrete", unit: "CUM", quantity: 650, unit_rate: 4790, amount: 3113500 },
+        { sl_no: 2, item_code: "RCC.02", description: "Concrete Boom Pumping Deployment", unit: "CUM", quantity: 650, unit_rate: 335, amount: 217750 },
+        { sl_no: 3, item_code: "RCC.03", description: "Retarder & Plasticizer Admixture", unit: "CUM", quantity: 650, unit_rate: 45, amount: 29250 },
+        { sl_no: 4, item_code: "RCC.04", description: "Slump & Cube Testing (NABL Report)", unit: "SET", quantity: 24, unit_rate: 515.9, amount: 12381 },
+      ],
+    },
+  ];
+}
+
+// Routes vendor quotation pack automatically based on active building
+export function getBuildingQuotations(projectName: string): NormalizedVendorQuote[] {
+  const name = (projectName || "").toLowerCase();
+  if (name.includes("aquina")) {
+    return getAquinaQuotations();
+  }
+  if (name.includes("vista")) {
+    return getVistaQuotations();
+  }
+  return getPreparsedAmaraQuotations();
+}
+
 // Computes the full comparative statement matrix and weighted ranking
 export function buildComparativeStatement(quotes: NormalizedVendorQuote[]) {
   const sortedByPrice = [...quotes].sort((a, b) => a.grand_total - b.grand_total);
   const lowestTotal = sortedByPrice[0].grand_total;
   const highestTotal = sortedByPrice[sortedByPrice.length - 1].grand_total;
 
-  // Build Item-wise Comparison Table
-  const itemCodes = ["WP.01", "WP.02", "WP.04", "WP.05", "WP.06"];
-  const itemDescriptions: Record<string, string> = {
-    "WP.01": "Toilet Floor Waterproofing",
-    "WP.02": "Toilet Wall Waterproofing (450mm)",
-    "WP.04": "Kitchen Floor Waterproofing",
-    "WP.05": "Kitchen Wall Waterproofing",
-    "WP.06": "Balcony & Terrace Floor Waterproofing",
-  };
+  // Build Item-wise Comparison Table dynamically from quotes
+  const itemMap = new Map<string, string>();
+  quotes.forEach((q) => {
+    q.items?.forEach((it) => {
+      if (it.item_code && !itemMap.has(it.item_code)) {
+        itemMap.set(it.item_code, it.description || it.item_code);
+      }
+    });
+  });
+
+  const dynamicCodes = Array.from(itemMap.keys());
+  const itemCodes =
+    dynamicCodes.length > 0
+      ? dynamicCodes
+      : ["WP.01", "WP.02", "WP.04", "WP.05", "WP.06"];
 
   const itemMatrix = itemCodes.map((code) => {
+    const desc = itemMap.get(code) || code;
     const vendorRates = quotes.map((q) => {
       const match = q.items.find((it) => it.item_code === code);
       return {
@@ -141,17 +332,19 @@ export function buildComparativeStatement(quotes: NormalizedVendorQuote[]) {
       };
     });
 
-    const minRate = Math.min(...vendorRates.filter((v) => v.rate > 0).map((v) => v.rate));
+    const validRates = vendorRates.filter((v) => v.rate > 0).map((v) => v.rate);
+    const minRate = validRates.length > 0 ? Math.min(...validRates) : 0;
 
     return {
       item_code: code,
-      description: itemDescriptions[code],
+      description: desc,
       vendor_rates: vendorRates.map((vr) => ({
         ...vr,
-        is_lowest: vr.rate === minRate,
+        is_lowest: vr.rate > 0 && vr.rate === minRate,
       })),
     };
   });
+
 
   // Calculate Weighted Score (60% Commercial + 25% Past Performance + 15% Delivery/Terms)
   const evaluatedVendors = quotes.map((q) => {

@@ -13,10 +13,11 @@ import {
   Check,
   RotateCcw,
 } from "lucide-react";
-import { getPreparsedAmaraQuotations, buildComparativeStatement } from "@/lib/comparator";
+import { getBuildingQuotations, buildComparativeStatement } from "@/lib/comparator";
 
 export default function ProcurementDashboard() {
   const {
+    selectedProject,
     currentStep,
     setStep,
     isLoading,
@@ -36,6 +37,21 @@ export default function ProcurementDashboard() {
     resetPipeline,
     rawInputDraft,
   } = useProcurementStore();
+
+  const currentBuildingKey = selectedProject?.includes("Aquina")
+    ? "Aquina"
+    : selectedProject?.includes("Vista")
+    ? "Vista"
+    : "Amara";
+
+  const sampleRequirements: Record<string, string> = {
+    Amara:
+      "Vinayak Amara (Towers 1 & 2): Typical floors (toilets, kitchens, balconies, terraces) require 4,200 SQM 2-coat polymer-modified cementitious waterproofing with 7-day ponding test and 10-year joint warranty.",
+    Aquina:
+      "Vinayak Aquina: Heavy duty 80mm M-40 interlocking concrete paver road network (1,450 SQM) designed for 45MT axle load traffic, including 150mm compacted WMM sub-base and precast kerb stones.",
+    Vista:
+      "Vinayak Vista: 650 Cum M-35 Grade Ready-Mix Concrete for 5th & 6th floor R.C.C slabs and shear walls. Pumping deployment required at 22m height with slump 120±25mm and 7/28 day cube tests.",
+  };
 
   const [copied, setCopied] = useState(false);
   const [rawInputText, setRawInputText] = useState(rawInputDraft || "");
@@ -127,32 +143,78 @@ export default function ProcurementDashboard() {
     if (!step1Requirement) return;
     setLoading(true);
     try {
+      const activeProjectName = selectedProject || step1Requirement.project || "Vinayak Project Site";
       const res = await fetch("/api/draft-rfq", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ requirement: step1Requirement, matchedCodes: step2MatchedCodes }),
+        body: JSON.stringify({
+          requirement: {
+            ...step1Requirement,
+            project: activeProjectName,
+          },
+          matchedCodes: step2MatchedCodes,
+        }),
       });
       const data = await res.json();
       if (data.data) {
         setStep3RFQ(data.data);
       } else {
         // Dynamic fallback based on user's actual project and category
+        const isAquina = activeProjectName.includes("Aquina");
+        const isVista = activeProjectName.includes("Vista");
+
         setStep3RFQ({
-          subject: `INVITATION TO TENDER: ${step1Requirement.project || "Site Project"} — ${step1Requirement.category || "Works"}`,
-          vendors: [
-            "Tender Vendor 1 (Primary Bidder)",
-            "Tender Vendor 2 (Regional)",
-            "Tender Vendor 3 (Technical L1)",
-            "Tender Vendor 4 (Direct)",
-          ],
-          terms: [
-            "1. PF & ESI registration required",
-            "2. TDS deducted as per Govt. norms",
-            "3. 5% Security deposit released after 12 months completion",
-            "4. GST paid extra (18%)",
-            "5. Water & Electricity provided at single point on site",
-            "6. Safety PPE cost under Contractor's scope",
-          ],
+          subject: isAquina
+            ? "INVITATION TO TENDER: Vinayak Aquina — Heavy Duty Road Network (45MT Paver & Drainage)"
+            : isVista
+            ? "INVITATION TO TENDER: Vinayak Vista — Superstructure Ready-Mix Concrete (M-35) & Pumping"
+            : `INVITATION TO TENDER: ${activeProjectName} — ${step1Requirement.category || "Works"}`,
+          vendors: isAquina
+            ? [
+                "Matur Enterprise (Rajat Da)",
+                "Bengal Roadways & Civil Infraworks",
+                "Eastern Pavers & Concrete LLP",
+                "New Town Aggregates Ltd",
+              ]
+            : isVista
+            ? [
+                "Ultratech Concrete Direct",
+                "ACC RMC Kolkata",
+                "Nuvoco Vistas Ready-Mix",
+                "Star Ready-Mix Bengal",
+              ]
+            : [
+                "Purvyakruti Sales & Services",
+                "Bajrang Construction",
+                "SK Construction",
+                "Shyama Waterproofing",
+              ],
+          terms: isAquina
+            ? [
+                "1. 80mm M-40 interlocking paver blocks with compulsory 28-day compression test",
+                "2. 45 MT axle load design capacity certificate mandatory",
+                "3. 150mm WMM subbase compaction using 8-10 ton vibratory roller",
+                "4. 5% retention for 18-month maintenance defect liability period",
+                "5. Strict compliance with Farvision ERP material gate entry",
+                "6. Safety barricading and traffic detour during installation under contractor's scope",
+              ]
+            : isVista
+            ? [
+                "1. Dedicated transit mixer fleet with boom pump delivery at 22m pour height",
+                "2. Cube sampling at site and independent NABL accredited lab test reports",
+                "3. Slump tolerance strictly maintained at 120mm ± 25mm at pour point",
+                "4. 30-day credit from monthly billing against joint pour verification",
+                "5. Valid GST e-way bill mandatory for Farvision material inward",
+                "6. Admixtures and retarders must strictly conform to IS 9103 specifications",
+              ]
+            : [
+                "1. PF & ESI registration required with monthly statutory returns",
+                "2. TDS deducted as per Income Tax norms",
+                "3. 5% Security deposit released after 12 months completion",
+                "4. GST paid extra (18%)",
+                "5. 7-day water ponding test mandatory before laying screed",
+                "6. 10-year joint guarantee certificate with chemical manufacturer",
+              ],
         });
       }
       // Stay on step 3 so user can review the RFQ email card before proceeding!
@@ -244,7 +306,7 @@ export default function ProcurementDashboard() {
   const runPackComparative = () => {
     setLoading(true);
     setTimeout(() => {
-      const quotes = getPreparsedAmaraQuotations();
+      const quotes = getBuildingQuotations(selectedProject || "Vinayak Amara");
       const comp = buildComparativeStatement(quotes);
       setStep4NormalizedQuotes(quotes);
       setStep5Comparative(comp);
@@ -524,17 +586,24 @@ export default function ProcurementDashboard() {
               >
                 {isLoading ? "Extracting BOQ with AI..." : "Extract BOQ"}
               </button>
+              <button
+                type="button"
+                onClick={() => setRawInputText(sampleRequirements[currentBuildingKey])}
+                className="sample"
+                id="fill"
+              >
+                Load {currentBuildingKey} Sample BOQ
+              </button>
               {rawInputText && (
                 <button
                   type="button"
                   onClick={() => setRawInputText("")}
                   className="sample"
-                  id="fill"
                 >
                   Clear input
                 </button>
               )}
-              <span className="hint">Enter your requirements above to extract BOQ.</span>
+              <span className="hint">Enter requirements above to extract BOQ.</span>
             </div>
 
             {step1Requirement && (
@@ -674,7 +743,7 @@ export default function ProcurementDashboard() {
                 onClick={() => setQuotationMode("pack")}
                 aria-pressed={quotationMode === "pack"}
               >
-                Use 4 Pack Quotations (Amara)
+                Use 4 Pack Quotations ({currentBuildingKey})
               </button>
             </div>
 
@@ -765,7 +834,7 @@ export default function ProcurementDashboard() {
                   disabled={isLoading}
                   className="btn-go"
                 >
-                  {isLoading ? "Analyzing 4 Pack Quotations..." : "Load & Compare 4 Pack Quotations (Amara) →"}
+                  {isLoading ? `Analyzing ${currentBuildingKey} Quotations...` : `Load & Compare 4 Pack Quotations (${currentBuildingKey}) →`}
                 </button>
               </div>
             )}
