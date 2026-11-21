@@ -102,16 +102,16 @@ export default function Site3DPage() {
         <div
           className="pointer-events-auto hidden md:flex items-center gap-3 px-4 py-2 rounded-2xl border backdrop-blur-md shadow-lg text-xs"
           style={{
-            backgroundColor: "var(--bg-card)",
-            borderColor: "var(--border-muted)",
-            color: "var(--text-primary)",
+            backgroundColor: "var(--panel)",
+            borderColor: "var(--line)",
+            color: "var(--text)",
           }}
         >
           <span className="flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: "var(--good)" }}></span>
             <strong>3D Digital Twin Active</strong>
           </span>
-          <span style={{ color: "var(--text-muted)" }}>• Left Click + Drag: Rotate | Right Click: Pan | Scroll: Zoom</span>
+          <span style={{ color: "var(--muted)" }}>• Left Click + Drag: Rotate | Right Click: Pan | Scroll: Zoom</span>
         </div>
       </div>
 
@@ -119,38 +119,38 @@ export default function Site3DPage() {
       <div
         className="absolute bottom-4 right-4 max-w-sm w-full z-10 p-5 rounded-2xl border backdrop-blur-md shadow-2xl space-y-3.5 transition-all"
         style={{
-          backgroundColor: "var(--bg-card)",
-          borderColor: "var(--border-subtle)",
+          backgroundColor: "var(--panel)",
+          borderColor: "var(--line)",
         }}
       >
-        <div className="flex items-center justify-between border-b pb-2.5" style={{ borderColor: "var(--border-muted)" }}>
+        <div className="flex items-center justify-between border-b pb-2.5" style={{ borderColor: "var(--line)" }}>
           <span
             className="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded border"
             style={{
-              backgroundColor: "var(--badge-bg)",
-              borderColor: "var(--badge-border)",
-              color: "var(--badge-text)",
+              backgroundColor: "var(--raise)",
+              borderColor: "var(--line)",
+              color: "var(--text)",
             }}
           >
             {currentActive.status}
           </span>
-          <span className="text-[11px] font-mono" style={{ color: "var(--text-muted)" }}>
+          <span className="text-[11px] font-mono" style={{ color: "var(--muted)" }}>
             {currentActive.category}
           </span>
         </div>
 
         <div>
-          <h3 className="text-base font-black tracking-tight" style={{ color: "var(--text-primary)" }}>
+          <h3 className="text-base font-semibold tracking-tight" style={{ fontFamily: "var(--head)", color: "var(--text)" }}>
             {currentActive.name}
           </h3>
-          <p className="text-[11px] mt-1 leading-relaxed" style={{ color: "var(--text-muted)" }}>
+          <p className="text-[12px] mt-1 leading-relaxed" style={{ color: "var(--muted)" }}>
             {currentActive.description}
           </p>
         </div>
 
         {/* Quantities Breakdown */}
         <div className="space-y-1.5 pt-1">
-          <p className="text-[10px] font-mono font-bold uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>
+          <p className="text-[10px] font-mono font-bold uppercase tracking-wider" style={{ color: "var(--muted)" }}>
             Verified BOQ Specifications:
           </p>
           <div className="space-y-1 max-h-32 overflow-y-auto">
@@ -159,12 +159,12 @@ export default function Site3DPage() {
                 key={i}
                 className="flex items-center justify-between p-1.5 rounded-lg border text-[11px]"
                 style={{
-                  backgroundColor: "var(--bg-canvas)",
-                  borderColor: "var(--border-muted)",
+                  backgroundColor: "var(--bg)",
+                  borderColor: "var(--line)",
                 }}
               >
-                <span className="truncate" style={{ color: "var(--text-primary)" }}>{q.item}</span>
-                <span className="font-mono font-bold shrink-0 ml-2" style={{ color: "var(--primary-accent)" }}>
+                <span className="truncate" style={{ color: "var(--text)" }}>{q.item}</span>
+                <span className="font-mono font-bold shrink-0 ml-2" style={{ color: "var(--accent)" }}>
                   {q.qty}
                 </span>
               </div>
@@ -172,17 +172,16 @@ export default function Site3DPage() {
           </div>
         </div>
 
-        <div className="pt-2 border-t text-[11px]" style={{ borderColor: "var(--border-muted)", color: "var(--text-muted)" }}>
-          <p>QS In-Charge: <strong style={{ color: "var(--text-primary)" }}>{currentActive.lead}</strong></p>
-          <p className="mt-0.5">Top Bidder: <strong style={{ color: "var(--primary-accent)" }}>{currentActive.bestBid}</strong></p>
+        <div className="pt-2 border-t text-[11px]" style={{ borderColor: "var(--line)", color: "var(--muted)" }}>
+          <p>QS In-Charge: <strong style={{ color: "var(--text)" }}>{currentActive.lead}</strong></p>
+          <p className="mt-0.5">Top Bidder: <strong style={{ color: "var(--good)" }}>{currentActive.bestBid}</strong></p>
         </div>
 
         {/* Action Button: Jump to Copilot */}
         <Link
           href="/dashboard"
           onClick={handleLaunchCopilot}
-          className="w-full py-2.5 px-4 rounded-xl text-xs font-bold text-white shadow-md flex items-center justify-center gap-2 transition-all hover:opacity-90 active:scale-95"
-          style={{ backgroundColor: "var(--primary-accent)" }}
+          className="btn-solid w-full text-xs flex items-center justify-center gap-2"
         >
           <span>Launch Copilot for this Asset</span>
           <ArrowRight className="w-3.5 h-3.5" />

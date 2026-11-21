@@ -15,7 +15,7 @@ function TowerModel({ isLightMode, isSelected, onClick }: { isLightMode: boolean
       <mesh position={[0, 1.25, 0]} receiveShadow castShadow>
         <boxGeometry args={[9, 2.5, 9]} />
         <meshStandardMaterial
-          color={isLightMode ? "#EDCDBB" : "#0F4C75"}
+          color={isLightMode ? "#ffffff" : "#0f2e34"}
           roughness={0.4}
         />
       </mesh>
@@ -36,15 +36,15 @@ function TowerModel({ isLightMode, isSelected, onClick }: { isLightMode: boolean
           color={
             isSelected
               ? isLightMode
-                ? "#BF9270"
-                : "#3282B8"
+                ? "#0f6b6b"
+                : "#e0b66a"
               : hovered
               ? isLightMode
-                ? "#E3B7A0"
-                : "#266d9c"
+                ? "#cfdedb"
+                : "#21505a"
               : isLightMode
-              ? "#f7dfcf"
-              : "#1B262C"
+              ? "#e1ecea"
+              : "#16404a"
           }
           roughness={0.3}
           metalness={0.15}
@@ -57,13 +57,13 @@ function TowerModel({ isLightMode, isSelected, onClick }: { isLightMode: boolean
           {/* Floor Slab Accent Line */}
           <mesh position={[0, y, 0]}>
             <boxGeometry args={[7.0, 0.25, 7.0]} />
-            <meshStandardMaterial color={isLightMode ? "#D9B8A2" : "#3282B8"} roughness={0.5} />
+            <meshStandardMaterial color={isLightMode ? "#0f6b6b" : "#21505a"} roughness={0.5} />
           </mesh>
           {/* Architectural Glazing Band */}
           <mesh position={[0, y + 0.9, 3.42]}>
             <boxGeometry args={[5.8, 1.2, 0.05]} />
             <meshStandardMaterial
-              color={isLightMode ? "#BF9270" : "#BBE1FA"}
+              color={isLightMode ? "#0f6b6b" : "#e0b66a"}
               roughness={0.1}
               metalness={0.8}
             />
@@ -74,7 +74,7 @@ function TowerModel({ isLightMode, isSelected, onClick }: { isLightMode: boolean
       {/* Rooftop Parapet Level */}
       <mesh position={[0, 20.2, 0]} castShadow>
         <boxGeometry args={[4.8, 1.4, 4.8]} />
-        <meshStandardMaterial color={isLightMode ? "#BF9270" : "#0F4C75"} roughness={0.4} />
+        <meshStandardMaterial color={isLightMode ? "#0f6b6b" : "#0f2e34"} roughness={0.4} />
       </mesh>
     </group>
   );
@@ -89,7 +89,7 @@ function RoadModel({ isLightMode, isSelected, onClick }: { isLightMode: boolean;
       {/* Subgrade Base */}
       <mesh position={[0, 0.3, 0]} receiveShadow>
         <boxGeometry args={[16, 0.6, 7.5]} />
-        <meshStandardMaterial color={isLightMode ? "#E3B7A0" : "#334155"} roughness={0.9} />
+        <meshStandardMaterial color={isLightMode ? "#cfdedb" : "#16404a"} roughness={0.9} />
       </mesh>
 
       {/* Surface Road Layer */}
@@ -108,15 +108,15 @@ function RoadModel({ isLightMode, isSelected, onClick }: { isLightMode: boolean;
           color={
             isSelected
               ? isLightMode
-                ? "#BF9270"
-                : "#3282B8"
+                ? "#0f6b6b"
+                : "#e0b66a"
               : hovered
               ? isLightMode
-                ? "#E3B7A0"
-                : "#266d9c"
+                ? "#cfdedb"
+                : "#21505a"
               : isLightMode
-              ? "#c9a184"
-              : "#1e293b"
+              ? "#e1ecea"
+              : "#0f2e34"
           }
           roughness={0.5}
         />
@@ -125,11 +125,11 @@ function RoadModel({ isLightMode, isSelected, onClick }: { isLightMode: boolean;
       {/* Kerb Edges */}
       <mesh position={[0, 1.15, 3.6]} castShadow>
         <boxGeometry args={[15.6, 0.35, 0.25]} />
-        <meshStandardMaterial color={isLightMode ? "#BF9270" : "#64748b"} />
+        <meshStandardMaterial color={isLightMode ? "#0f6b6b" : "#21505a"} />
       </mesh>
       <mesh position={[0, 1.15, -3.6]} castShadow>
         <boxGeometry args={[15.6, 0.35, 0.25]} />
-        <meshStandardMaterial color={isLightMode ? "#BF9270" : "#64748b"} />
+        <meshStandardMaterial color={isLightMode ? "#0f6b6b" : "#21505a"} />
       </mesh>
     </group>
   );

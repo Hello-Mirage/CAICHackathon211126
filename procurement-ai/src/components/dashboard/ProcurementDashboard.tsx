@@ -290,179 +290,112 @@ export default function ProcurementDashboard() {
   };
 
   return (
-    <div
-      className="flex flex-col h-full rounded-2xl border shadow-xl overflow-hidden transition-colors"
-      style={{
-        backgroundColor: "var(--bg-canvas)",
-        borderColor: "var(--border-subtle)",
-      }}
-    >
+    <section className="engine" aria-labelledby="et">
       {/* Top Header */}
-      <div
-        className="p-4 border-b flex items-center justify-between"
-        style={{
-          backgroundColor: "var(--bg-card)",
-          borderColor: "var(--border-muted)",
-        }}
-      >
+      <div className="eng-top">
         <div>
-          <h2 className="font-extrabold text-sm sm:text-base tracking-wide" style={{ color: "var(--text-primary)" }}>
-            Procurement Engine
-          </h2>
-          <p className="text-[11px]" style={{ color: "var(--text-muted)" }}>
-            Farvision ERP Sync • 6-Step Workflow
-          </p>
+          <h2 id="et">Procurement engine</h2>
+          <p>Synced with Farvision ERP</p>
         </div>
-
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() => {
-              resetPipeline();
-              setRawInputText("");
-            }}
-            title="Reset Pipeline"
-            className="p-1.5 rounded-lg border text-xs transition-all hover:opacity-80"
-            style={{ borderColor: "var(--border-muted)", color: "var(--text-muted)" }}
-          >
-            <RotateCcw className="w-3.5 h-3.5" />
-          </button>
-          <span
-            className="text-xs px-2.5 py-1 rounded-full font-mono font-bold border"
-            style={{
-              backgroundColor: "var(--badge-bg)",
-              borderColor: "var(--badge-border)",
-              color: "var(--badge-text)",
-            }}
-          >
-            Step {currentStep} / 6
-          </span>
-        </div>
+        <button
+          onClick={() => {
+            resetPipeline();
+            setRawInputText("");
+          }}
+          className="btn-ghost text-xs"
+          id="reset"
+        >
+          Start over
+        </button>
       </div>
 
       {/* Stepper Tabs */}
-      <div
-        className="grid grid-cols-6 border-b text-[11px] font-bold"
-        style={{ borderColor: "var(--border-muted)" }}
-      >
+      <div className="steps-bar" id="steps">
         {[
           { s: 1, label: "Procure" },
-          { s: 2, label: "ERP Match" },
-          { s: 3, label: "RFQ Draft" },
+          { s: 2, label: "ERP match" },
+          { s: 3, label: "RFQ draft" },
           { s: 4, label: "Normalise" },
           { s: 5, label: "Compare" },
           { s: 6, label: "Approve" },
-        ].map((st) => {
-          const isActive = currentStep === st.s;
-          const isDone = currentStep > st.s;
-          return (
-            <button
-              key={st.s}
-              onClick={() => setStep(st.s)}
-              className="py-2.5 px-1 text-center transition-all border-r flex flex-col items-center justify-center gap-0.5"
-              style={{
-                borderColor: "var(--border-muted)",
-                backgroundColor: isActive ? "var(--bg-card)" : "transparent",
-                color: isActive ? "var(--primary-accent)" : isDone ? "var(--text-primary)" : "var(--text-muted)",
-                borderBottom: isActive ? "3px solid var(--primary-accent)" : "none",
-              }}
-            >
-              <span>{st.s}. {st.label}</span>
-            </button>
-          );
-        })}
+        ].map((st) => (
+          <button
+            key={st.s}
+            onClick={() => setStep(st.s)}
+            disabled={st.s > currentStep}
+            className={currentStep === st.s ? "on" : currentStep > st.s ? "past" : ""}
+          >
+            {st.s}. {st.label}
+          </button>
+        ))}
       </div>
 
-      {/* Main Container */}
-      <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-4">
+      {/* Main Active Pane */}
+      <div className="pane" id="pane">
         {/* STEP 1: PROCURE INTAKE */}
         {currentStep === 1 && (
-          <div className="space-y-4">
-            <div>
-              <h3 className="text-sm font-bold flex items-center gap-2" style={{ color: "var(--text-primary)" }}>
-                <FileText className="w-4 h-4" style={{ color: "var(--primary-accent)" }} />
-                Step 1: Procure — Enter Any Requirement
-              </h3>
-              <p className="text-xs mt-1" style={{ color: "var(--text-muted)" }}>
-                Paste or type any site requirement (WhatsApp message, email, voice-note notes, or bill of quantities).
-              </p>
-            </div>
+          <div>
+            <h3>Enter a requirement</h3>
+            <p>Paste a WhatsApp message, email, voice-note text or a bill of quantities. We’ll pull out the items and quantities.</p>
 
             <textarea
+              id="req"
               value={rawInputText}
               onChange={(e) => setRawInputText(e.target.value)}
-              rows={8}
-              placeholder="Type or paste any requirement here..."
-              className="w-full rounded-2xl p-4 text-xs font-mono border focus:outline-none focus:ring-2 shadow-inner"
-              style={{
-                backgroundColor: "var(--bg-card)",
-                borderColor: "var(--border-subtle)",
-                color: "var(--text-primary)",
-              }}
+              placeholder="Type or paste a requirement"
             />
 
-            <button
-              onClick={runStep1}
-              disabled={isLoading || !rawInputText.trim()}
-              className="w-full py-3.5 px-4 rounded-xl text-xs font-bold text-white shadow-lg flex items-center justify-center gap-2 transition-all hover:opacity-90 active:scale-98 disabled:opacity-40"
-              style={{ backgroundColor: "var(--primary-accent)" }}
-            >
-              {isLoading ? (
-                <span>Parsing with Gemini NLP...</span>
-              ) : (
-                <>
-                  <Sparkles className="w-4 h-4" />
-                  <span>Procure: Parse Requirement & Extract BOQ →</span>
-                </>
-              )}
-            </button>
+            <div className="row">
+              <button
+                onClick={runStep1}
+                disabled={isLoading || !rawInputText.trim()}
+                className="btn-go"
+                id="next"
+              >
+                {isLoading ? "Extracting BOQ with AI..." : "Extract BOQ"}
+              </button>
+              <button
+                type="button"
+                onClick={() =>
+                  setRawInputText(
+                    "Tower 2, 3rd floor onwards: toilets, kitchens and balconies need polymer-modified cementitious waterproofing. About 4,200 sqm. Include 2-coat application, 7-day ponding test and a 10 year guarantee."
+                  )
+                }
+                className="sample"
+                id="fill"
+              >
+                Use a sample
+              </button>
+              <span className="hint">Nothing is sent until you continue.</span>
+            </div>
 
             {step1Requirement && (
-              <div
-                className="rounded-xl border p-3.5 space-y-2.5 text-xs shadow-sm"
-                style={{
-                  backgroundColor: "var(--bg-card)",
-                  borderColor: "var(--border-subtle)",
-                }}
-              >
-                <div className="flex items-center justify-between">
-                  <span className="font-bold flex items-center gap-1.5" style={{ color: "var(--primary-accent)" }}>
-                    <CheckCircle2 className="w-4 h-4" /> Farvision Structured Output
-                  </span>
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded border" style={{ borderColor: "var(--border-muted)", color: "var(--text-primary)" }}>
-                    Urgency: {step1Requirement.urgency?.toUpperCase() || "HIGH"}
-                  </span>
+              <div className="result">
+                <div>
+                  <span>Project / Scope</span>
+                  <span>{step1Requirement.project || "Site Project"} • {step1Requirement.category || "Works"}</span>
                 </div>
-
-                <div className="grid grid-cols-2 gap-2 text-[11px]" style={{ color: "var(--text-muted)" }}>
-                  <div>Project: <strong style={{ color: "var(--text-primary)" }}>{step1Requirement.project}</strong></div>
-                  <div>Category: <strong style={{ color: "var(--text-primary)" }}>{step1Requirement.category}</strong></div>
-                  <div>Scope: <strong style={{ color: "var(--text-primary)" }}>{step1Requirement.scope}</strong></div>
-                  <div>Timeline: <strong style={{ color: "var(--text-primary)" }}>{step1Requirement.timeline}</strong></div>
+                <div>
+                  <span>Items found</span>
+                  <span>{step1Requirement.items?.length || 0} line items</span>
                 </div>
-
-                <div className="mt-2 pt-2 border-t" style={{ borderColor: "var(--border-muted)" }}>
-                  <p className="font-semibold mb-1.5" style={{ color: "var(--text-muted)" }}>
-                    Extracted Quantities ({step1Requirement.items?.length || 0}):
-                  </p>
-                  <ul className="space-y-1">
-                    {step1Requirement.items?.map((it: any, idx: number) => (
-                      <li key={idx} className="flex justify-between p-2 rounded-lg text-[11px]" style={{ backgroundColor: "var(--bg-card-subtle)" }}>
-                        <span style={{ color: "var(--text-primary)" }}>{it.description}</span>
-                        <span className="font-mono font-bold" style={{ color: "var(--primary-accent)" }}>
-                          {it.quantity} {it.unit}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
+                <div>
+                  <span>Urgency</span>
+                  <span className="uppercase font-mono">{step1Requirement.urgency || "NORMAL"}</span>
                 </div>
-
-                <button
-                  onClick={() => setStep(2)}
-                  className="w-full mt-2 py-2.5 rounded-xl text-xs font-bold text-white flex items-center justify-center gap-1.5 transition-all shadow-sm"
-                  style={{ backgroundColor: "var(--primary-accent)" }}
-                >
-                  Proceed to Farvision ERP Matching <ArrowRight className="w-3.5 h-3.5" />
-                </button>
+                {step1Requirement.items?.map((it: any, idx: number) => (
+                  <div key={idx}>
+                    <span>{it.description}</span>
+                    <span className="font-mono font-bold" style={{ color: "var(--accent)" }}>
+                      {it.quantity} {it.unit}
+                    </span>
+                  </div>
+                ))}
+                <div style={{ backgroundColor: "var(--raise)" }}>
+                  <button onClick={() => setStep(2)} className="btn-go w-full text-xs">
+                    Continue to ERP Match →
+                  </button>
+                </div>
               </div>
             )}
           </div>
@@ -470,47 +403,43 @@ export default function ProcurementDashboard() {
 
         {/* STEP 2: ERP MATCH */}
         {currentStep === 2 && (
-          <div className="space-y-4">
-            <div>
-              <h3 className="text-sm font-bold flex items-center gap-2" style={{ color: "var(--text-primary)" }}>
-                <ShieldCheck className="w-4 h-4" style={{ color: "var(--primary-accent)" }} />
-                Step 2: Farvision ERP Item Code Resolution
-              </h3>
-              <p className="text-xs mt-1" style={{ color: "var(--text-muted)" }}>
-                Resolves items to canonical item codes in Farvision ERP, highlighting match confidence and duplicate flags.
-              </p>
+          <div>
+            <h3>Match to ERP items</h3>
+            <p>Each line is matched to an item code in Farvision so rates and history carry over.</p>
+
+            <div className="row">
+              <button
+                onClick={runStep2}
+                disabled={isLoading}
+                className="btn-go"
+              >
+                {isLoading ? "Resolving ERP item codes..." : "Match Farvision ERP Codes"}
+              </button>
+              <span className="hint">Synced with Farvision canonical catalog (76 codes)</span>
             </div>
 
-            <button
-              onClick={runStep2}
-              disabled={isLoading}
-              className="w-full py-3 px-4 rounded-xl text-xs font-bold text-white shadow-md flex items-center justify-center gap-2 transition-all hover:opacity-90 disabled:opacity-50"
-              style={{ backgroundColor: "var(--primary-accent)" }}
-            >
-              {isLoading ? "Matching ERP Records..." : "Resolve Farvision ERP Item Codes →"}
-            </button>
-
             {step2MatchedCodes && (
-              <div className="space-y-2">
+              <div className="result">
+                <div>
+                  <span>ERP Resolution Summary</span>
+                  <span>{step2MatchedCodes.length} items mapped</span>
+                </div>
                 {step2MatchedCodes.map((m: any, idx: number) => (
-                  <div key={idx} className="p-3 rounded-xl border text-xs shadow-sm" style={{ backgroundColor: "var(--bg-card)", borderColor: "var(--border-subtle)" }}>
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="font-semibold" style={{ color: "var(--text-primary)" }}>{m.requirement_item}</span>
-                      <span className="px-2 py-0.5 rounded font-mono text-[10px] border font-bold" style={{ backgroundColor: "var(--badge-bg)", borderColor: "var(--badge-border)", color: "var(--badge-text)" }}>
-                        {m.matched_code || "WP.01"}
-                      </span>
+                  <div key={idx}>
+                    <div>
+                      <p className="font-semibold">{m.requirement_item}</p>
+                      <p className="text-xs" style={{ color: "var(--muted)" }}>{m.erp_desc || "Farvision Catalog Item"}</p>
                     </div>
-                    <p className="text-[11px]" style={{ color: "var(--text-muted)" }}>{m.erp_desc || "Standard Item Specification"}</p>
+                    <span className="font-mono font-bold text-xs px-2 py-0.5 rounded border" style={{ borderColor: "var(--line)", color: "var(--accent)" }}>
+                      {m.matched_code || `WP.${String(idx + 1).padStart(2, "0")}`}
+                    </span>
                   </div>
                 ))}
-
-                <button
-                  onClick={() => setStep(3)}
-                  className="w-full mt-3 py-2.5 rounded-xl text-xs font-bold text-white flex items-center justify-center gap-1.5 transition-all shadow-sm"
-                  style={{ backgroundColor: "var(--primary-accent)" }}
-                >
-                  Proceed to RFQ Formulation <ArrowRight className="w-3.5 h-3.5" />
-                </button>
+                <div style={{ backgroundColor: "var(--raise)" }}>
+                  <button onClick={() => setStep(3)} className="btn-go w-full text-xs">
+                    Continue to Review RFQ →
+                  </button>
+                </div>
               </div>
             )}
           </div>
@@ -518,60 +447,40 @@ export default function ProcurementDashboard() {
 
         {/* STEP 3: DRAFT RFQ */}
         {currentStep === 3 && (
-          <div className="space-y-4">
-            <div>
-              <h3 className="text-sm font-bold flex items-center gap-2" style={{ color: "var(--text-primary)" }}>
-                <FileText className="w-4 h-4" style={{ color: "var(--primary-accent)" }} />
-                Step 3: Tender RFQ Dispatch
-              </h3>
-              <p className="text-xs mt-1" style={{ color: "var(--text-muted)" }}>
-                Standard tender email drafted with Vinayak's 6 mandatory contractual conditions.
-              </p>
+          <div>
+            <h3>Review the RFQ</h3>
+            <p>A draft request for quotation is prepared from the matched items with Vinayak's standard 6 contractual terms.</p>
+
+            <div className="row">
+              <button
+                onClick={runStep3}
+                disabled={isLoading}
+                className="btn-go"
+              >
+                {isLoading ? "Generating Tender RFQ..." : "Draft RFQ Emails"}
+              </button>
             </div>
 
-            <button
-              onClick={runStep3}
-              disabled={isLoading}
-              className="w-full py-3 px-4 rounded-xl text-xs font-bold text-white shadow-md flex items-center justify-center gap-2 transition-all hover:opacity-90 disabled:opacity-50"
-              style={{ backgroundColor: "var(--primary-accent)" }}
-            >
-              {isLoading ? "Generating Tender RFQ..." : "Draft Tender Emails →"}
-            </button>
-
             {step3RFQ && (
-              <div className="p-4 rounded-xl border text-xs space-y-3 shadow-sm" style={{ backgroundColor: "var(--bg-card)", borderColor: "var(--border-subtle)" }}>
+              <div className="result">
                 <div>
-                  <span className="text-[10px] font-mono font-bold uppercase text-slate-400">Subject:</span>
-                  <p className="font-bold text-sm mt-0.5" style={{ color: "var(--primary-accent)" }}>{step3RFQ.subject}</p>
+                  <span>Subject</span>
+                  <span className="font-semibold" style={{ color: "var(--accent)" }}>{step3RFQ.subject}</span>
                 </div>
-
                 <div>
-                  <span className="text-[10px] font-mono font-bold uppercase text-slate-400">Target Vendors:</span>
-                  <div className="flex flex-wrap gap-1 mt-1">
-                    {step3RFQ.vendors?.map((v: string, i: number) => (
-                      <span key={i} className="px-2 py-0.5 rounded text-[10px] border" style={{ backgroundColor: "var(--bg-card-subtle)", borderColor: "var(--border-muted)", color: "var(--text-primary)" }}>
-                        {v}
-                      </span>
-                    ))}
-                  </div>
+                  <span>Vendors Invited</span>
+                  <span>{step3RFQ.vendors?.join(", ")}</span>
                 </div>
-
                 <div>
-                  <span className="text-[10px] font-mono font-bold uppercase text-slate-400">Enforced Contract Terms:</span>
-                  <ul className="list-disc list-inside mt-1 space-y-0.5 text-[11px]" style={{ color: "var(--text-primary)" }}>
-                    {step3RFQ.terms?.map((t: string, i: number) => (
-                      <li key={i}>{t}</li>
-                    ))}
-                  </ul>
+                  <span>Contract Terms Enforced</span>
+                  <span className="text-xs">{step3RFQ.terms?.length || 6} mandatory terms (PF/ESI, TDS, 5% SD, GST 18%, PPE)</span>
                 </div>
-
-                <div className="pt-2 border-t flex gap-2" style={{ borderColor: "var(--border-muted)" }}>
-                  <button onClick={handleCopyRFQ} className="flex-1 py-2 rounded-lg border text-xs font-semibold flex items-center justify-center gap-1.5" style={{ backgroundColor: "var(--bg-card-subtle)", borderColor: "var(--border-muted)", color: "var(--text-primary)" }}>
-                    {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-                    {copied ? "Copied" : "Copy RFQ"}
+                <div className="flex gap-2 p-3" style={{ backgroundColor: "var(--raise)" }}>
+                  <button onClick={handleCopyRFQ} className="btn-ghost text-xs">
+                    {copied ? "Copied to Clipboard" : "Copy RFQ Email"}
                   </button>
-                  <button onClick={() => setStep(4)} className="flex-1 py-2 rounded-lg text-xs font-bold text-white flex items-center justify-center gap-1.5 shadow-sm" style={{ backgroundColor: "var(--primary-accent)" }}>
-                    Proceed to Quotations <ArrowRight className="w-3.5 h-3.5" />
+                  <button onClick={() => setStep(4)} className="btn-go flex-1 text-xs">
+                    Continue to Vendor Quotes →
                   </button>
                 </div>
               </div>
@@ -581,216 +490,158 @@ export default function ProcurementDashboard() {
 
         {/* STEP 4 & 5: COMPARATIVE STATEMENT */}
         {(currentStep === 4 || currentStep === 5) && (
-          <div className="space-y-4">
-            <div>
-              <h3 className="text-sm font-bold flex items-center gap-2" style={{ color: "var(--text-primary)" }}>
-                <Scale className="w-4 h-4" style={{ color: "var(--primary-accent)" }} />
-                Step 4 & 5: Comparative Statement
-              </h3>
-              <p className="text-xs mt-1" style={{ color: "var(--text-muted)" }}>
-                Normalizes vendor proposals, converts rates, calculates 18% GST, and ranks contractors by multi-factor score.
-              </p>
-            </div>
+          <div>
+            <h3>Compare vendors</h3>
+            <p>See normalised rates side by side with the L1 vendor marked and past performance scores.</p>
 
-            {/* Mode Switcher */}
-            <div className="flex rounded-xl p-1 border gap-1 text-xs font-bold" style={{ backgroundColor: "var(--bg-card-subtle)", borderColor: "var(--border-muted)" }}>
+            {/* Switch between Custom input and Pack data */}
+            <div className="seg mt-4 mb-4" role="group" aria-label="Quote Source">
               <button
                 onClick={() => setQuotationMode("custom")}
-                className="flex-1 py-1.5 rounded-lg transition-all"
-                style={{
-                  backgroundColor: quotationMode === "custom" ? "var(--primary-accent)" : "transparent",
-                  color: quotationMode === "custom" ? "#ffffff" : "var(--text-muted)",
-                }}
+                aria-pressed={quotationMode === "custom"}
               >
                 Input My Quotations
               </button>
               <button
                 onClick={() => setQuotationMode("pack")}
-                className="flex-1 py-1.5 rounded-lg transition-all"
-                style={{
-                  backgroundColor: quotationMode === "pack" ? "var(--primary-accent)" : "transparent",
-                  color: quotationMode === "pack" ? "#ffffff" : "var(--text-muted)",
-                }}
+                aria-pressed={quotationMode === "pack"}
               >
-                Use Hackathon Pack Quotations (4 Vendors)
+                Use 4 Pack Quotations (Amara)
               </button>
             </div>
 
-            {/* Custom Mode: User puts their own vendor data */}
             {quotationMode === "custom" && (
-              <div className="p-3.5 rounded-2xl border space-y-3" style={{ backgroundColor: "var(--bg-card)", borderColor: "var(--border-subtle)" }}>
-                <p className="text-xs font-bold" style={{ color: "var(--text-primary)" }}>
-                  Enter Vendor Quotations Received:
-                </p>
-
+              <div className="result p-4 space-y-3" style={{ background: "var(--raise)" }}>
+                <p className="font-semibold text-sm">Add Received Proposal:</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                   <div>
-                    <label className="text-[10px] font-semibold" style={{ color: "var(--text-muted)" }}>Vendor Name</label>
+                    <label className="text-[11px]" style={{ color: "var(--muted)" }}>Vendor Name</label>
                     <input
                       type="text"
-                      placeholder="e.g. Bajrang Construction"
+                      placeholder="e.g. Purvyakruti Sales"
                       value={inputVendorName}
                       onChange={(e) => setInputVendorName(e.target.value)}
-                      className="w-full mt-0.5 p-2 rounded-lg border text-xs"
-                      style={{ backgroundColor: "var(--bg-canvas)", borderColor: "var(--border-muted)", color: "var(--text-primary)" }}
+                      className="w-full mt-1 p-2 rounded-lg border text-xs"
+                      style={{ background: "var(--bg)", borderColor: "var(--line)", color: "var(--text)" }}
                     />
                   </div>
                   <div>
-                    <label className="text-[10px] font-semibold" style={{ color: "var(--text-muted)" }}>Quoted Amount (₹)</label>
+                    <label className="text-[11px]" style={{ color: "var(--muted)" }}>Quoted Amount (₹)</label>
                     <input
                       type="text"
-                      placeholder="e.g. 28,50,000"
+                      placeholder="e.g. 27,31,700"
                       value={inputVendorAmount}
                       onChange={(e) => setInputVendorAmount(e.target.value)}
-                      className="w-full mt-0.5 p-2 rounded-lg border text-xs"
-                      style={{ backgroundColor: "var(--bg-canvas)", borderColor: "var(--border-muted)", color: "var(--text-primary)" }}
+                      className="w-full mt-1 p-2 rounded-lg border text-xs"
+                      style={{ background: "var(--bg)", borderColor: "var(--line)", color: "var(--text)" }}
                     />
                   </div>
                   <div>
-                    <label className="text-[10px] font-semibold" style={{ color: "var(--text-muted)" }}>Past Performance Score (1-100)</label>
+                    <label className="text-[11px]" style={{ color: "var(--muted)" }}>Past Score (1-100)</label>
                     <input
                       type="number"
                       min="1"
                       max="100"
                       value={inputVendorScore}
                       onChange={(e) => setInputVendorScore(e.target.value)}
-                      className="w-full mt-0.5 p-2 rounded-lg border text-xs"
-                      style={{ backgroundColor: "var(--bg-canvas)", borderColor: "var(--border-muted)", color: "var(--text-primary)" }}
+                      className="w-full mt-1 p-2 rounded-lg border text-xs"
+                      style={{ background: "var(--bg)", borderColor: "var(--line)", color: "var(--text)" }}
                     />
                   </div>
                   <div>
-                    <label className="text-[10px] font-semibold" style={{ color: "var(--text-muted)" }}>Commercial Terms</label>
+                    <label className="text-[11px]" style={{ color: "var(--muted)" }}>Commercial Terms</label>
                     <input
                       type="text"
                       value={inputVendorTerms}
                       onChange={(e) => setInputVendorTerms(e.target.value)}
-                      className="w-full mt-0.5 p-2 rounded-lg border text-xs"
-                      style={{ backgroundColor: "var(--bg-canvas)", borderColor: "var(--border-muted)", color: "var(--text-primary)" }}
+                      className="w-full mt-1 p-2 rounded-lg border text-xs"
+                      style={{ background: "var(--bg)", borderColor: "var(--line)", color: "var(--text)" }}
                     />
                   </div>
                 </div>
 
-                <div className="flex gap-2">
-                  <button
-                    onClick={handleAddCustomVendor}
-                    className="px-4 py-2 rounded-xl text-xs font-bold border transition-all hover:opacity-90"
-                    style={{ backgroundColor: "var(--bg-card-subtle)", borderColor: "var(--border-muted)", color: "var(--text-primary)" }}
-                  >
-                    + Add Vendor Quote
+                <div className="flex gap-2 pt-2">
+                  <button onClick={handleAddCustomVendor} className="btn-ghost text-xs">
+                    + Add Vendor
                   </button>
                   <button
                     onClick={runCustomComparative}
                     disabled={customVendors.length < 2 || isLoading}
-                    className="flex-1 py-2 px-4 rounded-xl text-xs font-bold text-white transition-all disabled:opacity-40 shadow-sm"
-                    style={{ backgroundColor: "var(--primary-accent)" }}
+                    className="btn-go text-xs flex-1"
                   >
                     Compare Added Vendors ({customVendors.length}) →
                   </button>
                 </div>
 
                 {customVendors.length > 0 && (
-                  <div className="space-y-1 pt-1">
-                    <p className="text-[11px] font-semibold" style={{ color: "var(--text-muted)" }}>
-                      Added Proposals ({customVendors.length}):
-                    </p>
-                    <div className="space-y-1">
-                      {customVendors.map((v, i) => (
-                        <div key={i} className="flex items-center justify-between p-2 rounded-lg text-xs border" style={{ backgroundColor: "var(--bg-canvas)", borderColor: "var(--border-muted)" }}>
-                          <span className="font-semibold" style={{ color: "var(--text-primary)" }}>{v.name}</span>
-                          <div className="flex items-center gap-2">
-                            <span className="font-mono font-bold" style={{ color: "var(--primary-accent)" }}>₹{v.amount.toLocaleString("en-IN")}</span>
-                            <span className="text-[10px]" style={{ color: "var(--text-muted)" }}>({v.pastScore}/100)</span>
-                            <button
-                              onClick={() => setCustomVendors((prev) => prev.filter((_, idx) => idx !== i))}
-                              className="text-red-400 font-bold px-1.5 py-0.5 hover:bg-red-500/10 rounded"
-                            >
-                              ✕
-                            </button>
-                          </div>
+                  <div className="mt-2 space-y-1">
+                    {customVendors.map((v, i) => (
+                      <div key={i} className="flex justify-between items-center text-xs p-1.5 rounded" style={{ background: "var(--bg)" }}>
+                        <span>{v.name}</span>
+                        <div className="flex items-center gap-3">
+                          <span className="font-mono font-bold" style={{ color: "var(--accent)" }}>₹{v.amount.toLocaleString("en-IN")}</span>
+                          <span style={{ color: "var(--muted)" }}>({v.pastScore}/100)</span>
+                          <button onClick={() => setCustomVendors((p) => p.filter((_, idx) => idx !== i))} className="text-red-400 font-bold px-1">✕</button>
                         </div>
-                      ))}
-                    </div>
+                      </div>
+                    ))}
                   </div>
                 )}
               </div>
             )}
 
-            {/* Pack Mode: Loads the 4 hackathon PDFs */}
             {quotationMode === "pack" && (
-              <button
-                onClick={runPackComparative}
-                disabled={isLoading}
-                className="w-full py-3.5 px-4 rounded-xl text-xs font-bold text-white shadow-lg flex items-center justify-center gap-2 transition-all hover:opacity-90 disabled:opacity-50"
-                style={{ backgroundColor: "var(--primary-accent)" }}
-              >
-                {isLoading ? "Analyzing 4 Pack Quotations..." : "Load & Compare 4 Pack Quotations (Amara) →"}
-              </button>
+              <div className="row">
+                <button
+                  onClick={runPackComparative}
+                  disabled={isLoading}
+                  className="btn-go"
+                >
+                  {isLoading ? "Analyzing 4 Pack Quotations..." : "Load & Compare 4 Pack Quotations (Amara) →"}
+                </button>
+              </div>
             )}
 
             {step5Comparative && (
-              <div className="space-y-3">
-                <div className="grid grid-cols-2 gap-2 text-xs">
-                  <div className="p-3 rounded-xl border shadow-sm" style={{ backgroundColor: "var(--bg-card)", borderColor: "var(--border-subtle)" }}>
-                    <span className="text-[11px]" style={{ color: "var(--text-muted)" }}>L1 Lowest Bidder</span>
-                    <p className="font-extrabold text-emerald-400 text-sm mt-0.5">{step5Comparative.lowest_vendor}</p>
-                    <p className="font-mono text-[11px] mt-0.5" style={{ color: "var(--text-primary)" }}>
-                      ₹{step5Comparative.lowest_amount.toLocaleString("en-IN")}
-                    </p>
-                  </div>
-                  <div className="p-3 rounded-xl border shadow-sm" style={{ backgroundColor: "var(--bg-card)", borderColor: "var(--border-subtle)" }}>
-                    <span className="text-[11px]" style={{ color: "var(--text-muted)" }}>Negotiated Savings</span>
-                    <p className="font-extrabold text-blue-400 text-sm mt-0.5">
-                      ₹{step5Comparative.savings_vs_highest.toLocaleString("en-IN")}
-                    </p>
-                    <p className="font-mono text-[11px] text-emerald-400 mt-0.5 font-bold">
-                      {step5Comparative.savings_percent}% vs highest bid
-                    </p>
-                  </div>
+              <div className="result mt-4">
+                <div>
+                  <span>L1 Lowest Bidder</span>
+                  <span className="font-bold" style={{ color: "var(--good)" }}>
+                    {step5Comparative.lowest_vendor} (₹{step5Comparative.lowest_amount?.toLocaleString("en-IN")})
+                  </span>
+                </div>
+                <div>
+                  <span>Negotiated Savings vs Highest</span>
+                  <span className="font-bold" style={{ color: "var(--good)" }}>
+                    ₹{step5Comparative.savings_vs_highest?.toLocaleString("en-IN")} ({step5Comparative.savings_percent}%)
+                  </span>
                 </div>
 
-                {/* Vendor Rankings */}
-                <div className="rounded-xl border overflow-hidden text-xs shadow-sm" style={{ backgroundColor: "var(--bg-card)", borderColor: "var(--border-subtle)" }}>
-                  <div className="p-2.5 font-bold flex justify-between border-b" style={{ backgroundColor: "var(--bg-card-subtle)", borderColor: "var(--border-muted)", color: "var(--text-primary)" }}>
-                    <span>Vendor Evaluation Summary</span>
-                    <span>Weighted Score (60% Price + 40% History)</span>
+                {step5Comparative.vendors_summary?.map((v: any, i: number) => (
+                  <div key={i}>
+                    <div>
+                      <span className="font-semibold">{v.vendor_name}</span>
+                      {v.is_l1 && <span className="ml-2 text-xs font-bold px-1.5 py-0.5 rounded" style={{ background: "rgba(127, 209, 174, 0.2)", color: "var(--good)" }}>L1</span>}
+                      <p className="text-xs" style={{ color: "var(--muted)" }}>Score: {v.weighted_score}/100 | Quality: {v.quality_rating}★</p>
+                    </div>
+                    <div className="text-right">
+                      <span className="font-mono font-bold" style={{ color: "var(--text)" }}>₹{v.grand_total?.toLocaleString("en-IN")}</span>
+                      <p className="text-xs" style={{ color: "var(--muted)" }}>Rank #{v.commercial_rank}</p>
+                    </div>
                   </div>
-                  <div className="divide-y" style={{ borderColor: "var(--border-muted)" }}>
-                    {step5Comparative.vendors_summary?.map((v: any, i: number) => (
-                      <div key={i} className="p-3 flex items-center justify-between">
-                        <div>
-                          <div className="flex items-center gap-1.5">
-                            <span className="font-bold" style={{ color: "var(--text-primary)" }}>{v.vendor_name}</span>
-                            {v.is_l1 && (
-                              <span className="bg-emerald-500/20 text-emerald-400 text-[9px] px-1.5 py-0.2 rounded font-mono font-bold">
-                                L1
-                              </span>
-                            )}
-                          </div>
-                          <p className="text-[10px] mt-0.5" style={{ color: "var(--text-muted)" }}>
-                            ₹{v.grand_total.toLocaleString("en-IN")} | Past Score: {v.past_performance_score}/100 | Quality: {v.quality_rating}★
-                          </p>
-                        </div>
-                        <div className="text-right">
-                          <span className="font-extrabold font-mono text-sm" style={{ color: "var(--primary-accent)" }}>
-                            {v.weighted_score}
-                          </span>
-                          <p className="text-[10px] text-slate-400">Rank #{v.commercial_rank}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+                ))}
 
-                <button
-                  onClick={() => {
-                    setStep(6);
-                    runStep6();
-                  }}
-                  className="w-full py-3 rounded-xl text-xs font-bold text-white flex items-center justify-center gap-1.5 shadow-md"
-                  style={{ backgroundColor: "var(--primary-accent)" }}
-                >
-                  Proceed to HOD Recommendation Memo <ArrowRight className="w-3.5 h-3.5" />
-                </button>
+                <div style={{ backgroundColor: "var(--raise)" }}>
+                  <button
+                    onClick={() => {
+                      setStep(6);
+                      runStep6();
+                    }}
+                    className="btn-go w-full text-xs"
+                  >
+                    Proceed to Send for Approval (Step 6) →
+                  </button>
+                </div>
               </div>
             )}
           </div>
@@ -798,67 +649,57 @@ export default function ProcurementDashboard() {
 
         {/* STEP 6: HOD APPROVAL */}
         {currentStep === 6 && (
-          <div className="space-y-4">
-            <div>
-              <h3 className="text-sm font-bold flex items-center gap-2" style={{ color: "var(--text-primary)" }}>
-                <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                Step 6: HOD Recommendation Memo
-              </h3>
-              <p className="text-xs mt-1" style={{ color: "var(--text-muted)" }}>
-                Formal recommendation memo for management review and work order sign-off.
-              </p>
-            </div>
+          <div>
+            <h3>Send for approval</h3>
+            <p>Send the comparative statement and recommendation to management for formal sign-off.</p>
 
             {step6Recommendation && (
-              <div className="rounded-2xl border p-4 text-xs space-y-3.5 shadow-lg" style={{ backgroundColor: "var(--bg-card)", borderColor: "var(--border-subtle)" }}>
-                <div className="border-b pb-2.5" style={{ borderColor: "var(--border-muted)" }}>
-                  <p className="text-[10px] uppercase tracking-wider font-extrabold text-emerald-400">
-                    Official Executive Memo
-                  </p>
-                  <p className="font-bold text-sm mt-0.5" style={{ color: "var(--text-primary)" }}>{step6Recommendation.subject}</p>
-                  <p className="text-[11px] mt-0.5" style={{ color: "var(--text-muted)" }}>
-                    To: {step6Recommendation.memo_to} | From: {step6Recommendation.memo_from}
-                  </p>
-                </div>
-
-                <div className="p-3 rounded-xl border" style={{ backgroundColor: "var(--bg-card-subtle)", borderColor: "var(--border-muted)" }}>
-                  <span className="text-[11px]" style={{ color: "var(--text-muted)" }}>Recommended Vendor:</span>
-                  <p className="text-sm font-extrabold mt-0.5" style={{ color: "var(--text-primary)" }}>
-                    {step6Recommendation.recommended_vendor}
-                  </p>
-                  <p className="text-xs font-mono font-bold text-emerald-400 mt-0.5">
-                    Total Contract Value: ₹{step6Recommendation.grand_total_inr?.toLocaleString("en-IN")}
-                  </p>
-                </div>
-
+              <div className="result">
                 <div>
-                  <p className="font-bold mb-1.5" style={{ color: "var(--text-primary)" }}>Audit Justification Points:</p>
-                  <ul className="space-y-1.5 text-[11px]" style={{ color: "var(--text-primary)" }}>
+                  <span>Official Memo Subject</span>
+                  <span className="font-bold" style={{ color: "var(--text)" }}>{step6Recommendation.subject}</span>
+                </div>
+                <div>
+                  <span>Recipient & Sender</span>
+                  <span>To: {step6Recommendation.memo_to} | From: {step6Recommendation.memo_from}</span>
+                </div>
+                <div>
+                  <span>Recommended Contractor</span>
+                  <span className="font-bold text-sm" style={{ color: "var(--good)" }}>
+                    {step6Recommendation.recommended_vendor}
+                  </span>
+                </div>
+                <div>
+                  <span>Total Approved Contract Value</span>
+                  <span className="font-mono font-bold text-sm" style={{ color: "var(--accent)" }}>
+                    ₹{step6Recommendation.grand_total_inr?.toLocaleString("en-IN")}
+                  </span>
+                </div>
+                <div>
+                  <span>Audit Justification Points</span>
+                  <ul className="text-xs space-y-1 text-right">
                     {step6Recommendation.reasons?.map((r: string, idx: number) => (
-                      <li key={idx} className="flex items-start gap-1.5">
-                        <span className="text-emerald-400 font-bold">✓</span>
-                        <span>{r}</span>
+                      <li key={idx} className="list-none text-left">
+                        <span style={{ color: "var(--good)" }}>✓ </span>{r}
                       </li>
                     ))}
                   </ul>
                 </div>
-
-                <div className="pt-2 border-t flex items-center justify-between" style={{ borderColor: "var(--border-muted)" }}>
-                  <span className="px-2.5 py-1 rounded text-[10px] font-mono border font-bold" style={{ backgroundColor: "rgba(245, 158, 11, 0.15)", borderColor: "rgba(245, 158, 11, 0.3)", color: "#f59e0b" }}>
-                    {step6Recommendation.approval_status}
-                  </span>
+                <div className="p-3" style={{ backgroundColor: "var(--raise)" }}>
                   <button
-                    onClick={() => alert("Work Order signed and dispatched to Farvision ERP!")}
-                    className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold shadow-md transition-all active:scale-95"
+                    onClick={() => alert("🎉 Work Order approved and dispatched to Farvision ERP & Site Accounts!")}
+                    className="btn-go w-full text-xs"
                   >
-                    Approve & Issue Work Order
+                    Approve & Issue Work Order (Farvision ERP Sync)
                   </button>
                 </div>
               </div>
             )}
+
+            <p className="ok">Step 6 of 6 complete</p>
           </div>
         )}
       </div>
-    </div>
+    </section>
   );
 }
