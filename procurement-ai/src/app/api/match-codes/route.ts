@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
     }
 
     const matches = await matchItemCodes(requirement);
-    return NextResponse.json({ success: true, data: matches });
+    return NextResponse.json({ success: true, data: matches, matches });
   } catch (error) {
     console.error("Match item codes error:", error);
     return NextResponse.json(

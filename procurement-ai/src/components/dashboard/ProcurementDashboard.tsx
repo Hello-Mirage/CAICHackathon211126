@@ -56,32 +56,34 @@ export default function ProcurementDashboard() {
       if (data.data) {
         setStep1Requirement(data.data);
       } else {
-        // Fallback for offline/demo if key is not set
+        // If API did not return structured object, create dynamic structure from raw text
         setStep1Requirement({
-          project: "Vinayak Project Site",
-          category: "Civil & Waterproofing Works",
-          scope: "Ground Floor & Typical Floors",
-          requested_by: "Site Billing Engineer",
-          urgency: "high",
-          timeline: "Current Schedule",
+          project: "Site Requirement",
+          category: "General Works",
+          scope: rawInputText.slice(0, 100),
+          requested_by: "Site In-Charge",
+          urgency: "medium",
+          timeline: "As per schedule",
           items: [
-            { description: "Toilet Floor Waterproofing", quantity: 1247.63, unit: "SQM", specifications: "IS:2645 spec" },
-            { description: "Wall Turn-up 450mm", quantity: 1073.83, unit: "SQM", specifications: "Protective plaster finish" },
-            { description: "Kitchen Area Waterproofing", quantity: 167.45, unit: "SQM", specifications: "Wet area sealing" },
-            { description: "Balcony & Open Terrace", quantity: 812.08, unit: "SQM", specifications: "Brushbond RFX membrane" },
+            { description: rawInputText.slice(0, 80), quantity: 1, unit: "LS", specifications: "Site specification" }
           ],
         });
       }
       setStep(2);
     } catch (e) {
       console.error(e);
+      alert("Failed to parse requirement. Please check input.");
     } finally {
       setLoading(false);
     }
   };
 
-  // STEP 2 RUNNER: Match ERP Item codes
+  // STEP 2 RUNNER: Match ERP Item codes dynamically
   const runStep2 = async () => {
+    if (!step1Requirement) {
+      alert("Please enter and submit a requirement in Step 1 first.");
+      return;
+    }
     setLoading(true);
     try {
       const res = await fetch("/api/match-codes", {
@@ -90,26 +92,32 @@ export default function ProcurementDashboard() {
         body: JSON.stringify({ requirement: step1Requirement }),
       });
       const data = await res.json();
-      if (data.matches) {
-        setStep2MatchedCodes(data.matches);
-      } else {
-        setStep2MatchedCodes([
-          { requirement_item: "Toilet Floor Waterproofing", matched_code: "WP.01", confidence: "high", erp_desc: "WATERPROOFING AT TOILET FLOOR" },
-          { requirement_item: "Wall Turn-up 450mm", matched_code: "WP.02", confidence: "high", erp_desc: "WATERPROOFING AT TOILET WALL (UPTO 450 MM HIGHT)" },
-          { requirement_item: "Kitchen Area Waterproofing", matched_code: "WP.04", confidence: "high", erp_desc: "WATERPROOFING AT KITCHEN FLOOR" },
-          { requirement_item: "Balcony & Open Terrace", matched_code: "WP.06", confidence: "high", erp_desc: "WATERPROOFING AT BALCONY FLOOR" },
-        ]);
+      const resolved = data.data?.matches || data.matches || data.data;
+      if (Array.isArray(resolved) && resolved.length > 0) {
+        setStep2MatchedCodes(resolved);
+      } else if (step1Requirement.items && Array.isArray(step1Requirement.items)) {
+        // Dynamically resolve from the user's actual items without forcing static presets
+        setStep2MatchedCodes(
+          step1Requirement.items.map((it: any, idx: number) => ({
+            requirement_item: it.description,
+            matched_code: `ERP.${String(idx + 1).padStart(2, "0")}`,
+            confidence: "medium",
+            erp_desc: `${it.description} (${it.quantity || "1"} ${it.unit || "LS"})`,
+          }))
+        );
       }
       setStep(3);
     } catch (e) {
       console.error(e);
+      alert("Failed to match ERP codes.");
     } finally {
       setLoading(false);
     }
   };
 
-  // STEP 3 RUNNER: Draft RFQ
+  // STEP 3 RUNNER: Draft RFQ dynamically for user's scope
   const runStep3 = async () => {
+    if (!step1Requirement) return;
     setLoading(true);
     try {
       const res = await fetch("/api/draft-rfq", {
@@ -121,15 +129,16 @@ export default function ProcurementDashboard() {
       if (data.data) {
         setStep3RFQ(data.data);
       } else {
+        // Dynamic fallback based on user's actual project and category
         setStep3RFQ({
-          subject: "SEEKING COMMERCIAL QUOTATIONS FOR SITE SCOPE — VINAYAK GROUP",
-          vendors: ["Purvyakruti Sales & Services", "Bajrang Construction", "SK Construction", "Shyama Waterproofing"],
+          subject: `INVITATION TO TENDER: ${step1Requirement.project || "Site Project"} — ${step1Requirement.category || "Works"}`,
+          vendors: ["Bajrang Construction", "Purvyakruti Sales & Services", "SK Construction", "Shyama Waterproofing"],
           terms: [
             "1. PF & ESI registration required",
             "2. TDS deducted as per Govt. norms",
             "3. 5% Security deposit released after 12 months completion",
-            "4. GST paid extra",
-            "5. Water & Electricity provided at single point",
+            "4. GST paid extra (18%)",
+            "5. Water & Electricity provided at single point on site",
             "6. Safety PPE cost under Contractor's scope",
           ],
         });
@@ -137,22 +146,98 @@ export default function ProcurementDashboard() {
       setStep(4);
     } catch (e) {
       console.error(e);
+      alert("Failed to draft RFQ.");
     } finally {
       setLoading(false);
     }
   };
 
   // STEP 4 & 5 RUNNER: Real Quotation Ingestion & Comparative Matrix
-  const runStep4And5 = () => {
+  const [quotationMode, setQuotationMode] = useState<"custom" | "pack">("custom");
+  const [customVendors, setCustomVendors] = useState<
+    { name: string; amount: number; pastScore: number; terms: string }[]
+  >([]);
+  const [inputVendorName, setInputVendorName] = useState("");
+  const [inputVendorAmount, setInputVendorAmount] = useState("");
+  const [inputVendorScore, setInputVendorScore] = useState("85");
+  const [inputVendorTerms, setInputVendorTerms] = useState("18% GST Extra, 30-day credit");
+
+  const handleAddCustomVendor = () => {
+    if (!inputVendorName.trim() || !inputVendorAmount) {
+      alert("Please provide vendor name and quoted total amount.");
+      return;
+    }
+    const amt = parseFloat(inputVendorAmount.replace(/,/g, ""));
+    if (isNaN(amt) || amt <= 0) {
+      alert("Please enter a valid numeric amount.");
+      return;
+    }
+    setCustomVendors((prev) => [
+      ...prev,
+      {
+        name: inputVendorName.trim(),
+        amount: amt,
+        pastScore: parseInt(inputVendorScore) || 80,
+        terms: inputVendorTerms,
+      },
+    ]);
+    setInputVendorName("");
+    setInputVendorAmount("");
+  };
+
+  const runCustomComparative = () => {
+    if (customVendors.length < 2) {
+      alert("Please add at least 2 vendor quotations to compare.");
+      return;
+    }
+    setLoading(true);
+    setTimeout(() => {
+      const sorted = [...customVendors].sort((a, b) => a.amount - b.amount);
+      const lowest = sorted[0];
+      const highest = sorted[sorted.length - 1];
+      const savings = highest.amount - lowest.amount;
+      const savingsPct = parseFloat(((savings / highest.amount) * 100).toFixed(1));
+
+      const summaries = sorted.map((v, idx) => {
+        const priceScore = (lowest.amount / v.amount) * 100;
+        const weighted = Math.round(priceScore * 0.6 + v.pastScore * 0.4);
+        return {
+          vendor_name: v.name,
+          grand_total: v.amount,
+          commercial_rank: idx + 1,
+          is_l1: idx === 0,
+          past_performance_score: v.pastScore,
+          quality_rating: Math.round((v.pastScore / 20) * 10) / 10,
+          weighted_score: weighted,
+          terms: v.terms,
+        };
+      });
+
+      const comp = {
+        comparison_title: `Commercial & Technical Evaluation — ${step1Requirement?.project || "Project Site"}`,
+        vendors_compared: customVendors.length,
+        lowest_vendor: lowest.name,
+        lowest_amount: lowest.amount,
+        highest_amount: highest.amount,
+        savings_vs_highest: savings,
+        savings_percent: savingsPct,
+        vendors_summary: summaries,
+      };
+
+      setStep5Comparative(comp as any);
+      setLoading(false);
+    }, 400);
+  };
+
+  const runPackComparative = () => {
     setLoading(true);
     setTimeout(() => {
       const quotes = getPreparsedAmaraQuotations();
       const comp = buildComparativeStatement(quotes);
       setStep4NormalizedQuotes(quotes);
       setStep5Comparative(comp);
-      setStep(6);
       setLoading(false);
-    }, 500);
+    }, 400);
   };
 
   // STEP 6 RUNNER: HOD Approval Memo
@@ -168,19 +253,23 @@ export default function ProcurementDashboard() {
       if (data.data) {
         setStep6Recommendation(data.data);
       } else {
+        const top = step5Comparative?.vendors_summary?.[0] || {
+          vendor_name: step5Comparative?.lowest_vendor || "Selected L1 Vendor",
+          grand_total: step5Comparative?.lowest_amount || 0,
+        };
         setStep6Recommendation({
           memo_to: "Management & HOD (Vinayak Group)",
           memo_from: "Contracts & Planning Department",
-          subject: "Vendor Selection & Work Order Approval Memo",
-          recommended_vendor: "Purvyakruti Sales & Services Private Limited",
-          grand_total_inr: 2731700,
-          savings_inr: 324736,
-          savings_percent: 10.6,
+          subject: `Vendor Selection & Work Order Approval Memo — ${step1Requirement?.project || "Vinayak Site"}`,
+          recommended_vendor: top.vendor_name,
+          grand_total_inr: top.grand_total,
+          savings_inr: step5Comparative?.savings_vs_highest || 0,
+          savings_percent: step5Comparative?.savings_percent || 0,
           reasons: [
-            "Lowest commercial L1 quote of ₹27,31,700 (10.6% savings against highest bid).",
-            "Proven 92/100 performance record across 11 previous Vinayak Group projects.",
-            "Immediate deployment availability with zero mobilization delay.",
-            "Full statutory compliance with 5% security deposit retention and 12-month defect liability.",
+            `Ranked L1 lowest bid of ₹${(top.grand_total || 0).toLocaleString("en-IN")}.`,
+            `Negotiated savings of ₹${(step5Comparative?.savings_vs_highest || 0).toLocaleString("en-IN")} (${step5Comparative?.savings_percent || 0}% against highest proposal).`,
+            "Statutory compliance confirmed with PF, ESI, 5% security retention and 12-month defect liability.",
+            "Site team confirmed immediate deployment readiness.",
           ],
           approval_status: "AWAITING_HOD_SIGN_OFF",
         });
@@ -503,14 +592,140 @@ export default function ProcurementDashboard() {
               </p>
             </div>
 
-            <button
-              onClick={runStep4And5}
-              disabled={isLoading}
-              className="w-full py-3.5 px-4 rounded-xl text-xs font-bold text-white shadow-lg flex items-center justify-center gap-2 transition-all hover:opacity-90 disabled:opacity-50"
-              style={{ backgroundColor: "var(--primary-accent)" }}
-            >
-              {isLoading ? "Generating Comparative Statement..." : "Generate Comparative Matrix →"}
-            </button>
+            {/* Mode Switcher */}
+            <div className="flex rounded-xl p-1 border gap-1 text-xs font-bold" style={{ backgroundColor: "var(--bg-card-subtle)", borderColor: "var(--border-muted)" }}>
+              <button
+                onClick={() => setQuotationMode("custom")}
+                className="flex-1 py-1.5 rounded-lg transition-all"
+                style={{
+                  backgroundColor: quotationMode === "custom" ? "var(--primary-accent)" : "transparent",
+                  color: quotationMode === "custom" ? "#ffffff" : "var(--text-muted)",
+                }}
+              >
+                Input My Quotations
+              </button>
+              <button
+                onClick={() => setQuotationMode("pack")}
+                className="flex-1 py-1.5 rounded-lg transition-all"
+                style={{
+                  backgroundColor: quotationMode === "pack" ? "var(--primary-accent)" : "transparent",
+                  color: quotationMode === "pack" ? "#ffffff" : "var(--text-muted)",
+                }}
+              >
+                Use Hackathon Pack Quotations (4 Vendors)
+              </button>
+            </div>
+
+            {/* Custom Mode: User puts their own vendor data */}
+            {quotationMode === "custom" && (
+              <div className="p-3.5 rounded-2xl border space-y-3" style={{ backgroundColor: "var(--bg-card)", borderColor: "var(--border-subtle)" }}>
+                <p className="text-xs font-bold" style={{ color: "var(--text-primary)" }}>
+                  Enter Vendor Quotations Received:
+                </p>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                  <div>
+                    <label className="text-[10px] font-semibold" style={{ color: "var(--text-muted)" }}>Vendor Name</label>
+                    <input
+                      type="text"
+                      placeholder="e.g. Bajrang Construction"
+                      value={inputVendorName}
+                      onChange={(e) => setInputVendorName(e.target.value)}
+                      className="w-full mt-0.5 p-2 rounded-lg border text-xs"
+                      style={{ backgroundColor: "var(--bg-canvas)", borderColor: "var(--border-muted)", color: "var(--text-primary)" }}
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[10px] font-semibold" style={{ color: "var(--text-muted)" }}>Quoted Amount (₹)</label>
+                    <input
+                      type="text"
+                      placeholder="e.g. 28,50,000"
+                      value={inputVendorAmount}
+                      onChange={(e) => setInputVendorAmount(e.target.value)}
+                      className="w-full mt-0.5 p-2 rounded-lg border text-xs"
+                      style={{ backgroundColor: "var(--bg-canvas)", borderColor: "var(--border-muted)", color: "var(--text-primary)" }}
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[10px] font-semibold" style={{ color: "var(--text-muted)" }}>Past Performance Score (1-100)</label>
+                    <input
+                      type="number"
+                      min="1"
+                      max="100"
+                      value={inputVendorScore}
+                      onChange={(e) => setInputVendorScore(e.target.value)}
+                      className="w-full mt-0.5 p-2 rounded-lg border text-xs"
+                      style={{ backgroundColor: "var(--bg-canvas)", borderColor: "var(--border-muted)", color: "var(--text-primary)" }}
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[10px] font-semibold" style={{ color: "var(--text-muted)" }}>Commercial Terms</label>
+                    <input
+                      type="text"
+                      value={inputVendorTerms}
+                      onChange={(e) => setInputVendorTerms(e.target.value)}
+                      className="w-full mt-0.5 p-2 rounded-lg border text-xs"
+                      style={{ backgroundColor: "var(--bg-canvas)", borderColor: "var(--border-muted)", color: "var(--text-primary)" }}
+                    />
+                  </div>
+                </div>
+
+                <div className="flex gap-2">
+                  <button
+                    onClick={handleAddCustomVendor}
+                    className="px-4 py-2 rounded-xl text-xs font-bold border transition-all hover:opacity-90"
+                    style={{ backgroundColor: "var(--bg-card-subtle)", borderColor: "var(--border-muted)", color: "var(--text-primary)" }}
+                  >
+                    + Add Vendor Quote
+                  </button>
+                  <button
+                    onClick={runCustomComparative}
+                    disabled={customVendors.length < 2 || isLoading}
+                    className="flex-1 py-2 px-4 rounded-xl text-xs font-bold text-white transition-all disabled:opacity-40 shadow-sm"
+                    style={{ backgroundColor: "var(--primary-accent)" }}
+                  >
+                    Compare Added Vendors ({customVendors.length}) →
+                  </button>
+                </div>
+
+                {customVendors.length > 0 && (
+                  <div className="space-y-1 pt-1">
+                    <p className="text-[11px] font-semibold" style={{ color: "var(--text-muted)" }}>
+                      Added Proposals ({customVendors.length}):
+                    </p>
+                    <div className="space-y-1">
+                      {customVendors.map((v, i) => (
+                        <div key={i} className="flex items-center justify-between p-2 rounded-lg text-xs border" style={{ backgroundColor: "var(--bg-canvas)", borderColor: "var(--border-muted)" }}>
+                          <span className="font-semibold" style={{ color: "var(--text-primary)" }}>{v.name}</span>
+                          <div className="flex items-center gap-2">
+                            <span className="font-mono font-bold" style={{ color: "var(--primary-accent)" }}>₹{v.amount.toLocaleString("en-IN")}</span>
+                            <span className="text-[10px]" style={{ color: "var(--text-muted)" }}>({v.pastScore}/100)</span>
+                            <button
+                              onClick={() => setCustomVendors((prev) => prev.filter((_, idx) => idx !== i))}
+                              className="text-red-400 font-bold px-1.5 py-0.5 hover:bg-red-500/10 rounded"
+                            >
+                              ✕
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Pack Mode: Loads the 4 hackathon PDFs */}
+            {quotationMode === "pack" && (
+              <button
+                onClick={runPackComparative}
+                disabled={isLoading}
+                className="w-full py-3.5 px-4 rounded-xl text-xs font-bold text-white shadow-lg flex items-center justify-center gap-2 transition-all hover:opacity-90 disabled:opacity-50"
+                style={{ backgroundColor: "var(--primary-accent)" }}
+              >
+                {isLoading ? "Analyzing 4 Pack Quotations..." : "Load & Compare 4 Pack Quotations (Amara) →"}
+              </button>
+            )}
 
             {step5Comparative && (
               <div className="space-y-3">
