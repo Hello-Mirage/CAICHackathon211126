@@ -22,8 +22,7 @@ export default function Navbar() {
   }, [setTheme]);
 
   const navLinks = [
-    { href: "/", label: "Overview", icon: Layers },
-    { href: "/dashboard", label: "Procurement Copilot", icon: ShieldCheck, badge: "6-Step SOP" },
+    { href: "/dashboard", label: "Procure (Step 1-6)", icon: ShieldCheck, badge: "Main Flow" },
     { href: "/site-3d", label: "3D Digital Twin", icon: Box, badge: "Isometric" },
   ];
 

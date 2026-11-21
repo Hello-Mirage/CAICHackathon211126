@@ -374,49 +374,56 @@ export default function ProcurementDashboard() {
             <div className="flex items-center justify-between">
               <h3 className="text-sm font-bold flex items-center gap-2" style={{ color: "var(--text-primary)" }}>
                 <FileText className="w-4 h-4" style={{ color: "var(--primary-accent)" }} />
-                Step 1: Capture Field Requirement (Email / WhatsApp / Voice)
+                Step 1: Procure — Enter Any Site Requirement Format
               </h3>
             </div>
 
             <p className="text-xs" style={{ color: "var(--text-muted)" }}>
-              Select a real site input preset or paste unstructured message. The NLP engine standardizes line items, units, and scopes.
+              Accepts any format: paste an email, a WhatsApp message, or voice-note transcription. The AI parses quantities, units, and scopes into Farvision ERP procurement specifications.
             </p>
 
-            {/* Presets Chips */}
-            <div className="flex flex-wrap gap-1.5">
+            {/* Quick Modality Filter Chips */}
+            <div className="flex flex-wrap items-center gap-2 pt-1">
+              <span className="text-[10px] font-mono text-slate-400 font-bold uppercase">Presets:</span>
               {presets.map((p, i) => (
                 <button
                   key={i}
                   onClick={() => setRawInputText(p.text)}
-                  className="text-[10px] px-2.5 py-1 rounded-lg border font-medium transition-all hover:scale-[1.02]"
+                  className="text-[11px] px-3 py-1.5 rounded-xl border font-semibold transition-all hover:scale-105"
                   style={{
                     backgroundColor: "var(--bg-card)",
                     borderColor: "var(--border-muted)",
                     color: "var(--text-primary)",
                   }}
                 >
-                  <Zap className="w-2.5 h-2.5 inline mr-1" style={{ color: "var(--primary-accent)" }} />
+                  <Zap className="w-3 h-3 inline mr-1 text-amber-400" />
                   {p.label}
                 </button>
               ))}
             </div>
 
-            <textarea
-              value={rawInputText}
-              onChange={(e) => setRawInputText(e.target.value)}
-              rows={6}
-              className="w-full rounded-xl p-3 text-xs font-mono border focus:outline-none focus:ring-2 shadow-inner"
-              style={{
-                backgroundColor: "var(--bg-card)",
-                borderColor: "var(--border-subtle)",
-                color: "var(--text-primary)",
-              }}
-            />
+            <div className="relative">
+              <textarea
+                value={rawInputText}
+                onChange={(e) => setRawInputText(e.target.value)}
+                rows={7}
+                placeholder="Paste any requirement format here (WhatsApp text, site email, transcription, or quick notes)..."
+                className="w-full rounded-2xl p-4 text-xs font-mono border focus:outline-none focus:ring-2 shadow-inner"
+                style={{
+                  backgroundColor: "var(--bg-card)",
+                  borderColor: "var(--border-subtle)",
+                  color: "var(--text-primary)",
+                }}
+              />
+              <div className="absolute bottom-3 right-3 text-[10px] font-mono px-2 py-0.5 rounded bg-slate-900/60 border border-slate-700/60 text-slate-400">
+                Any Format Ingestion
+              </div>
+            </div>
 
             <button
               onClick={runStep1}
               disabled={isLoading}
-              className="w-full py-3 px-4 rounded-xl text-xs font-bold text-white shadow-md flex items-center justify-center gap-2 transition-all hover:opacity-90 active:scale-98 disabled:opacity-50"
+              className="w-full py-3.5 px-4 rounded-xl text-xs font-bold text-white shadow-lg flex items-center justify-center gap-2 transition-all hover:opacity-90 active:scale-98 disabled:opacity-50"
               style={{ backgroundColor: "var(--primary-accent)" }}
             >
               {isLoading ? (
@@ -424,7 +431,7 @@ export default function ProcurementDashboard() {
               ) : (
                 <>
                   <Sparkles className="w-4 h-4" />
-                  <span>Parse Requirement & Extract BOQ →</span>
+                  <span>Procure: Parse Requirement & Extract BOQ →</span>
                 </>
               )}
             </button>
