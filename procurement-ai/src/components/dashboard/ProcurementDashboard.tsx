@@ -139,7 +139,12 @@ export default function ProcurementDashboard() {
         // Dynamic fallback based on user's actual project and category
         setStep3RFQ({
           subject: `INVITATION TO TENDER: ${step1Requirement.project || "Site Project"} — ${step1Requirement.category || "Works"}`,
-          vendors: ["Bajrang Construction", "Purvyakruti Sales & Services", "SK Construction", "Shyama Waterproofing"],
+          vendors: [
+            "Tender Vendor 1 (Primary Bidder)",
+            "Tender Vendor 2 (Regional)",
+            "Tender Vendor 3 (Technical L1)",
+            "Tender Vendor 4 (Direct)",
+          ],
           terms: [
             "1. PF & ESI registration required",
             "2. TDS deducted as per Govt. norms",
@@ -362,7 +367,7 @@ export default function ProcurementDashboard() {
               <td class="meta-label">Project:</td>
               <td><strong>${step1Requirement?.project || "Vinayak Project Site"}</strong></td>
               <td class="meta-label">Category:</td>
-              <td>${step1Requirement?.category || "Civil & Waterproofing Works"}</td>
+              <td>${step1Requirement?.category || "Direct Construction Works"}</td>
             </tr>
             <tr>
               <td class="meta-label">Recommended L1:</td>
@@ -519,19 +524,17 @@ export default function ProcurementDashboard() {
               >
                 {isLoading ? "Extracting BOQ with AI..." : "Extract BOQ"}
               </button>
-              <button
-                type="button"
-                onClick={() =>
-                  setRawInputText(
-                    "Tower 2, 3rd floor onwards: toilets, kitchens and balconies need polymer-modified cementitious waterproofing. About 4,200 sqm. Include 2-coat application, 7-day ponding test and a 10 year guarantee."
-                  )
-                }
-                className="sample"
-                id="fill"
-              >
-                Use a sample
-              </button>
-              <span className="hint">Nothing is sent until you continue.</span>
+              {rawInputText && (
+                <button
+                  type="button"
+                  onClick={() => setRawInputText("")}
+                  className="sample"
+                  id="fill"
+                >
+                  Clear input
+                </button>
+              )}
+              <span className="hint">Enter your requirements above to extract BOQ.</span>
             </div>
 
             {step1Requirement && (

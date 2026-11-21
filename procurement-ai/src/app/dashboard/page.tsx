@@ -5,9 +5,17 @@ import ProcurementDashboard from "@/components/dashboard/ProcurementDashboard";
 import { useProcurementStore } from "@/lib/store";
 
 export default function DashboardPage() {
-  const { selectedProject, setSelectedProject, currentStep } = useProcurementStore();
+  const {
+    selectedProject,
+    setSelectedProject,
+    currentStep,
+    step1Requirement,
+    step5Comparative,
+    rawInputDraft,
+  } = useProcurementStore();
 
   const isAmara = selectedProject.includes("Amara");
+  const isAquina = selectedProject.includes("Aquina");
 
   const sop = [
     ["BOQ receipt and checking", "01–03"],
@@ -17,7 +25,7 @@ export default function DashboardPage() {
     ["Work order and final floating", "10–12"],
   ];
 
-  const at = Math.min(Math.floor((currentStep - 1) * 5 / 6), 4);
+  const at = Math.min(Math.floor(((currentStep - 1) * 5) / 6), 4);
 
   return (
     <main className="vinayak-main">
@@ -32,29 +40,48 @@ export default function DashboardPage() {
           </button>
           <button
             onClick={() => setSelectedProject("Vinayak Aquina")}
-            aria-pressed={!isAmara}
+            aria-pressed={isAquina}
           >
             Aquina
           </button>
+          <button
+            onClick={() => setSelectedProject("Vinayak Vista")}
+            aria-pressed={!isAmara && !isAquina}
+          >
+            Vista
+          </button>
         </div>
 
-        {/* Project Name & Scope */}
-        <h1>{isAmara ? "Vinayak Amara" : "Vinayak Aquina"}</h1>
-        <p className="saving">{isAmara ? "10.6% saved at L1" : "Savings pending"}</p>
+        {/* Dynamic Project Name & Scope */}
+        <h1>{selectedProject || "Vinayak Group"}</h1>
+        <p className="saving">
+          {step5Comparative?.summary?.savings_percentage
+            ? `${step5Comparative.summary.savings_percentage}% saved at L1 (₹${Number(
+                step5Comparative.summary.savings_amount || 0
+              ).toLocaleString("en-IN")})`
+            : `Tender Stage: Step 0${currentStep} of 6`}
+        </p>
         <p className="scope">
-          {isAmara
-            ? "Internal waterproofing for Tower 2: ground floor, 1st floor and 3rd floor onwards, including all typical floors (toilets, kitchens, balconies, terraces, FRP). Mockup floor approved."
-            : "Procurement package for Aquina. Switch projects any time; each one keeps its own BOQ and vendor comparison."}
+          {step1Requirement?.scope_summary ||
+            (rawInputDraft
+              ? rawInputDraft.length > 220
+                ? rawInputDraft.slice(0, 220) + "..."
+                : rawInputDraft
+              : "No package loaded yet. Type or paste your bill of quantities, tender items, or vendor quote in Step 1 to begin.")}
         </p>
 
-        {/* Metadata Details */}
+        {/* Dynamic Metadata Details */}
         <dl className="vinayak-dl">
           <dt>Category</dt>
-          <dd>{isAmara ? "Waterproofing (Civil)" : "Road Work & Paving"}</dd>
-          <dt>Timeline</dt>
-          <dd>{isAmara ? "Nov 2026 – Jun 2028" : "Oct 2026 – Mar 2027"}</dd>
+          <dd>{step1Requirement?.category || "Awaiting Intake"}</dd>
+          <dt>Line Items</dt>
+          <dd>
+            {step1Requirement?.items?.length
+              ? `${step1Requirement.items.length} BOQ items extracted`
+              : "Pending input"}
+          </dd>
           <dt>Source</dt>
-          <dd>Farvision ERP</dd>
+          <dd>Farvision ERP · User Intake</dd>
         </dl>
 
         {/* 12-Step SOP Audit Trail */}
@@ -64,7 +91,9 @@ export default function DashboardPage() {
             {sop.map((s, i) => (
               <li
                 key={i}
-                className={`vinayak-li ${i < at ? "done" : i === at ? "now" : ""}`}
+                className={`vinayak-li ${
+                  i < at ? "done" : i === at ? "now" : ""
+                }`}
               >
                 <span>{s[0]}</span>
                 <small>SOP {s[1]}</small>
@@ -79,3 +108,4 @@ export default function DashboardPage() {
     </main>
   );
 }
+
