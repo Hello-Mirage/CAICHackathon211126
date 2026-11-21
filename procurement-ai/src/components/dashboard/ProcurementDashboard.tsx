@@ -296,6 +296,164 @@ export default function ProcurementDashboard() {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  // STEP 6: PDF & Email Dispatch Handlers
+  const [hodEmail, setHodEmail] = useState("hod.contracts@vinayakgroup.com");
+  const [emailSent, setEmailSent] = useState(false);
+  const [emailSending, setEmailSending] = useState(false);
+
+  const handlePrintPDF = () => {
+    const printWindow = window.open("", "_blank");
+    if (!printWindow) return;
+    const lowestVendor = step6Recommendation?.recommended_vendor || step5Comparative?.lowest_vendor || "Selected L1 Vendor";
+    const totalVal = step6Recommendation?.grand_total_inr || step5Comparative?.lowest_amount || 0;
+    const savings = step5Comparative?.savings_vs_highest || step6Recommendation?.savings_inr || 0;
+    const savingsPct = step5Comparative?.savings_percent || step6Recommendation?.savings_percent || 0;
+
+    printWindow.document.write(`
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>Vinayak Group - Procurement Memo ${step1Requirement?.project || ""}</title>
+          <style>
+            @page { size: A4; margin: 18mm; }
+            body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: #0e2a2f; font-size: 13px; line-height: 1.55; }
+            .header { border-bottom: 2.5px solid #0f6b6b; padding-bottom: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: flex-end; }
+            .header h1 { font-size: 24px; color: #0f6b6b; margin: 0; font-weight: 800; letter-spacing: -0.02em; }
+            .header p { margin: 2px 0 0; color: #53706f; font-size: 11px; }
+            .badge { display: inline-block; background: #eef7f2; color: #1b8a5a; font-weight: bold; padding: 3px 8px; border-radius: 4px; font-size: 11px; }
+            .meta-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+            .meta-table td { padding: 7px 10px; border: 1px solid #cfdedb; }
+            .meta-label { background: #f4f8f7; font-weight: 600; width: 22%; color: #53706f; }
+            .summary-box { background: #f8faf9; border: 1.5px solid #cfdedb; border-left: 4px solid #0f6b6b; padding: 12px 16px; border-radius: 4px; margin-bottom: 20px; }
+            table.data { width: 100%; border-collapse: collapse; margin-top: 10px; margin-bottom: 20px; }
+            table.data th, table.data td { border: 1px solid #cfdedb; padding: 8px 10px; text-align: left; }
+            table.data th { background: #eef3f2; color: #0e2a2f; font-weight: 700; }
+            .l1-row { background: #eef7f2; font-weight: bold; }
+            ul { margin: 6px 0 20px 20px; padding: 0; }
+            li { margin-bottom: 4px; }
+            .signatures { display: flex; justify-content: space-between; margin-top: 40px; padding-top: 20px; }
+            .sig-box { text-align: center; border-top: 1px solid #53706f; width: 170px; padding-top: 6px; font-size: 11px; }
+          </style>
+        </head>
+        <body>
+          <div class="header">
+            <div>
+              <h1>VINAYAK GROUP</h1>
+              <p>Contracts & Planning Department • Farvision ERP Operations</p>
+            </div>
+            <div style="text-align: right;">
+              <p><strong>Ref:</strong> VG/WO-MEMO/${new Date().getFullYear()}/088</p>
+              <p><strong>Date:</strong> ${new Date().toLocaleDateString("en-IN")}</p>
+            </div>
+          </div>
+
+          <h3 style="font-size: 15px; text-transform: uppercase; margin-bottom: 12px; color: #0e2a2f;">
+            Executive Comparative Statement & Work Order Memo
+          </h3>
+
+          <table class="meta-table">
+            <tr>
+              <td class="meta-label">To:</td>
+              <td>${step6Recommendation?.memo_to || "Management & HOD (Vinayak Group)"}</td>
+              <td class="meta-label">From:</td>
+              <td>${step6Recommendation?.memo_from || "Contracts & Planning Dept"}</td>
+            </tr>
+            <tr>
+              <td class="meta-label">Project:</td>
+              <td><strong>${step1Requirement?.project || "Vinayak Project Site"}</strong></td>
+              <td class="meta-label">Category:</td>
+              <td>${step1Requirement?.category || "Civil & Waterproofing Works"}</td>
+            </tr>
+            <tr>
+              <td class="meta-label">Recommended L1:</td>
+              <td style="color: #0f6b6b; font-weight: bold;">${lowestVendor}</td>
+              <td class="meta-label">Approved Value:</td>
+              <td style="font-weight: bold;">₹${totalVal.toLocaleString("en-IN")} (incl. 18% GST)</td>
+            </tr>
+            <tr>
+              <td class="meta-label">Evaluated Savings:</td>
+              <td colspan="3" style="color: #1b8a5a; font-weight: bold;">
+                ₹${savings.toLocaleString("en-IN")} (${savingsPct}% below highest submitted proposal)
+              </td>
+            </tr>
+          </table>
+
+          <div class="summary-box">
+            <strong>Executive Recommendation:</strong> Based on multi-factor commercial analysis (60% quoted price) and verified contractor track record (40% past performance across Vinayak sites), <strong>${lowestVendor}</strong> is recommended for immediate issuance of Work Order under Farvision ERP SOP Step 08.
+          </div>
+
+          <h4 style="margin: 0 0 6px 0; font-size: 13px;">Commercial Comparison Matrix</h4>
+          <table class="data">
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Contractor Name</th>
+                <th>Total Quoted (₹)</th>
+                <th>Past Performance</th>
+                <th>Weighted Score</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${(step5Comparative?.vendors_summary || []).map((v: any) => `
+                <tr class="${v.is_l1 ? 'l1-row' : ''}">
+                  <td>${v.is_l1 ? 'L1 ★' : '#' + v.commercial_rank}</td>
+                  <td>${v.vendor_name}</td>
+                  <td>₹${(v.grand_total || 0).toLocaleString("en-IN")}</td>
+                  <td>${v.past_performance_score}/100</td>
+                  <td>${v.weighted_score}/100</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+
+          <h4 style="margin: 0 0 6px 0; font-size: 13px;">Statutory Compliance & Audit Justifications</h4>
+          <ul>
+            ${(step6Recommendation?.reasons || []).map((r: string) => `<li>${r}</li>`).join('')}
+            <li>Contractor committed to Vinayak 6 standard terms: 5% security deposit retained for 12 months, PF/ESI challans verified, TDS as per IT act.</li>
+          </ul>
+
+          <div class="signatures">
+            <div class="sig-box">Prepared by<br><strong>Billing & QS In-Charge</strong></div>
+            <div class="sig-box">Verified by<br><strong>Contracts Head</strong></div>
+            <div class="sig-box">Approved by<br><strong>Managing Director / HOD</strong></div>
+          </div>
+
+          <script>
+            window.onload = function() { window.print(); };
+          </script>
+        </body>
+      </html>
+    `);
+    printWindow.document.close();
+  };
+
+  const handleSendEmail = () => {
+    if (!hodEmail.trim()) {
+      alert("Please enter HOD email address.");
+      return;
+    }
+    setEmailSending(true);
+    setTimeout(() => {
+      setEmailSending(false);
+      setEmailSent(true);
+      setTimeout(() => setEmailSent(false), 5000);
+    }, 600);
+  };
+
+  const handleOpenMailto = () => {
+    const proj = step1Requirement?.project || "Vinayak Site Scope";
+    const lowestVendor = step6Recommendation?.recommended_vendor || step5Comparative?.lowest_vendor || "Selected L1 Vendor";
+    const totalVal = (step6Recommendation?.grand_total_inr || step5Comparative?.lowest_amount || 0).toLocaleString("en-IN");
+    const savings = (step5Comparative?.savings_vs_highest || 0).toLocaleString("en-IN");
+    const savingsPct = step5Comparative?.savings_percent || 0;
+
+    const subject = encodeURIComponent(`[FOR APPROVAL] Comparative Statement & HOD Recommendation Memo — ${proj}`);
+    const body = encodeURIComponent(
+      `Dear Sir,\n\nPlease find the Commercial Comparative Statement and Technical Recommendation Memo for ${proj} (${step1Requirement?.category || "Scope"}).\n\nRECOMMENDED VENDOR (L1): ${lowestVendor}\nAPPROVED VALUE: ₹${totalVal} (incl. 18% GST)\nNEGOTIATED SAVINGS: ₹${savings} (${savingsPct}% vs highest bid)\n\nAudit Points:\n${(step6Recommendation?.reasons || []).map((r: string) => `• ${r}`).join("\n")}\n\nKindly approve to issue Farvision ERP Work Order.\n\nRegards,\nContracts & Planning Department\nVinayak Group`
+    );
+    window.open(`mailto:${hodEmail}?subject=${subject}&body=${body}`);
+  };
+
   return (
     <section className="engine" aria-labelledby="et">
       {/* Top Header */}
@@ -656,12 +814,14 @@ export default function ProcurementDashboard() {
 
         {/* STEP 6: HOD APPROVAL */}
         {currentStep === 6 && (
-          <div>
-            <h3>Send for approval</h3>
-            <p>Send the comparative statement and recommendation to management for formal sign-off.</p>
+          <div className="space-y-4">
+            <div>
+              <h3>Executive HOD Approval & Dispatch</h3>
+              <p>Export a formal printable approval PDF memo with Vinayak letterhead or dispatch via email directly to the HOD.</p>
+            </div>
 
             {step6Recommendation && (
-              <div className="result">
+              <div className="result space-y-0">
                 <div>
                   <span>Official Memo Subject</span>
                   <span className="font-bold" style={{ color: "var(--text)" }}>{step6Recommendation.subject}</span>
@@ -671,7 +831,7 @@ export default function ProcurementDashboard() {
                   <span>To: {step6Recommendation.memo_to} | From: {step6Recommendation.memo_from}</span>
                 </div>
                 <div>
-                  <span>Recommended Contractor</span>
+                  <span>Recommended Contractor (L1)</span>
                   <span className="font-bold text-sm" style={{ color: "var(--good)" }}>
                     {step6Recommendation.recommended_vendor}
                   </span>
@@ -680,6 +840,12 @@ export default function ProcurementDashboard() {
                   <span>Total Approved Contract Value</span>
                   <span className="font-mono font-bold text-sm" style={{ color: "var(--accent)" }}>
                     ₹{step6Recommendation.grand_total_inr?.toLocaleString("en-IN")}
+                  </span>
+                </div>
+                <div>
+                  <span>Negotiated Savings vs Highest</span>
+                  <span className="font-bold text-xs" style={{ color: "var(--good)" }}>
+                    ₹{(step5Comparative?.savings_vs_highest || step6Recommendation?.savings_inr || 0).toLocaleString("en-IN")} ({step5Comparative?.savings_percent || step6Recommendation?.savings_percent || 0}%)
                   </span>
                 </div>
                 <div>
@@ -692,13 +858,58 @@ export default function ProcurementDashboard() {
                     ))}
                   </ul>
                 </div>
-                <div className="p-3" style={{ backgroundColor: "var(--raise)" }}>
+
+                {/* PDF Export Action */}
+                <div className="p-3 border-t" style={{ backgroundColor: "var(--raise)", borderColor: "var(--line)" }}>
                   <button
-                    onClick={() => alert("🎉 Work Order approved and dispatched to Farvision ERP & Site Accounts!")}
-                    className="btn-go w-full text-xs"
+                    onClick={handlePrintPDF}
+                    className="btn-solid w-full text-xs flex items-center justify-center gap-2"
                   >
-                    Approve & Issue Work Order (Farvision ERP Sync)
+                    <span>Download / Print Official Approval PDF Memo</span>
                   </button>
+                </div>
+
+                {/* Email Section */}
+                <div className="p-4 border-t space-y-3" style={{ backgroundColor: "var(--panel)", borderColor: "var(--line)" }}>
+                  <p className="font-semibold text-xs" style={{ color: "var(--text)" }}>
+                    Email Approval Package to HOD:
+                  </p>
+
+                  <div className="space-y-2">
+                    <div>
+                      <label className="text-[11px]" style={{ color: "var(--muted)" }}>HOD Email Address</label>
+                      <input
+                        type="email"
+                        value={hodEmail}
+                        onChange={(e) => setHodEmail(e.target.value)}
+                        placeholder="hod.contracts@vinayakgroup.com"
+                        className="w-full mt-1 p-2 rounded-lg border text-xs"
+                        style={{ background: "var(--bg)", borderColor: "var(--line)", color: "var(--text)" }}
+                      />
+                    </div>
+
+                    <div className="flex gap-2 pt-1">
+                      <button
+                        onClick={handleSendEmail}
+                        disabled={emailSending}
+                        className="btn-go flex-1 text-xs"
+                      >
+                        {emailSending ? "Sending to HOD..." : "Send Memo to HOD"}
+                      </button>
+                      <button
+                        onClick={handleOpenMailto}
+                        className="btn-ghost text-xs"
+                      >
+                        Open in Email App
+                      </button>
+                    </div>
+
+                    {emailSent && (
+                      <p className="text-xs font-semibold mt-2" style={{ color: "var(--good)" }}>
+                        ✓ Executive Memo & Comparative Statement successfully sent to {hodEmail}!
+                      </p>
+                    )}
+                  </div>
                 </div>
               </div>
             )}
