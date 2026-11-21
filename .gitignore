@@ -24,5 +24,6 @@ pnpm-debug.log*
 Thumbs.db
 *.swp
 *.swo
+*.html
 .vscode/
 .idea/
