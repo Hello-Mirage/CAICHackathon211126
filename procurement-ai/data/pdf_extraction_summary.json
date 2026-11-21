@@ -1,0 +1,32 @@
+{
+  "quotations": [
+    {
+      "vendor_name": "Bajrang_Construction",
+      "filename": "Quotation_Bajrang_Construction.pdf",
+      "has_text": false,
+      "error": "Cannot create property 'verbosity' on string 'D:\\Codes\\CaicHackathon\\vinayak-vch3-data\\06_quotations\\Quotation_Bajrang_Construction.pdf'"
+    },
+    {
+      "vendor_name": "Purvyakruti",
+      "filename": "Quotation_Purvyakruti.pdf",
+      "has_text": false,
+      "error": "Cannot create property 'verbosity' on string 'D:\\Codes\\CaicHackathon\\vinayak-vch3-data\\06_quotations\\Quotation_Purvyakruti.pdf'"
+    },
+    {
+      "vendor_name": "Shyama",
+      "filename": "Quotation_Shyama.pdf",
+      "has_text": false,
+      "error": "Cannot create property 'verbosity' on string 'D:\\Codes\\CaicHackathon\\vinayak-vch3-data\\06_quotations\\Quotation_Shyama.pdf'"
+    },
+    {
+      "vendor_name": "SK_Construction",
+      "filename": "Quotation_SK_Construction.pdf",
+      "has_text": false,
+      "error": "Cannot create property 'verbosity' on string 'D:\\Codes\\CaicHackathon\\vinayak-vch3-data\\06_quotations\\Quotation_SK_Construction.pdf'"
+    }
+  ],
+  "tender_boq": {
+    "filename": "BOQ_Specification_Waterproofing_Amara_Tower-2_rates_blank.pdf",
+    "has_text": false
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "steps": [
+    {
+      "step": 1,
+      "name": "BOQ Receival",
+      "description": "Receipt of the BOQ (Bill of Quantities) from the respective Site Team for the proposed scope of work."
+    },
+    {
+      "step": 2,
+      "name": "BOQ Checking",
+      "description": "Preliminary scrutiny and random verification of the submitted BOQ to check the quantities, item descriptions and completeness of the scope. In case of any discrepancies, anomalies or missing details, the same shall be communicated to the respective Site Team for necessary clarification and rectification."
+    },
+    {
+      "step": 3,
+      "name": "Corrected BOQ Receival",
+      "description": "Receipt of the duly corrected and revised BOQ from the Site Team, incorporating the necessary modifications and clarifications."
+    },
+    {
+      "step": 4,
+      "name": "Preparation of Tender Documents",
+      "description": "Preparation of the tender document after finalisation of the scope of work, technical specifications, terms of reference and other relevant requirements."
+    },
+    {
+      "step": 5,
+      "name": "Tender Floating",
+      "description": "Floating of the tender to a minimum of three (3) eligible and relevant vendors/contractors for obtaining competitive quotations."
+    },
+    {
+      "step": 6,
+      "name": "Comparative Statement",
+      "description": "Collection of quotations through necessary follow-ups with the participating vendors and preparation of a Comparative Statement (CS) based on the received quotations."
+    },
+    {
+      "step": 7,
+      "name": "Rate Negotiation",
+      "description": "Conducting rate negotiations with the shortlisted vendors, supported by appropriate rate analysis and market benchmarking, wherever applicable."
+    },
+    {
+      "step": 8,
+      "name": "Management Approval",
+      "description": "Submission of the finalised Comparative Statement, negotiated rates and relevant rate analysis to Management for review and approval."
+    },
+    {
+      "step": 9,
+      "name": "Vendor Registration",
+      "description": "Upon receipt of Management approval, forwarding the Vendor Registration Form to the selected contractor/vendor for submission along with the requisite supporting documents. (if required)"
+    },
+    {
+      "step": 10,
+      "name": "Work Order Creation",
+      "description": "Upon successful completion of vendor registration and verification by the Accounts Department, preparation of the Work Order (WO), incorporating the approved scope of work, BOQ, rates, payment terms and applicable terms and conditions."
+    },
+    {
+      "step": 11,
+      "name": "Management Approval (WO)",
+      "description": "Submission of the drafted Work Order to Management for final review and approval, followed by execution/signing by the duly authorised signatory."
+    },
+    {
+      "step": 12,
+      "name": "Work Order Floating",
+      "description": "Floating of the signed work order to the respective vendor & site team."
+    }
+  ],
+  "total_steps": 12,
+  "source": "Vinayak Group Procurement SOP"
+}

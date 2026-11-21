@@ -1,0 +1,43 @@
+{
+  "whatsapp_messages": [
+    {
+      "id": "wa_01",
+      "type": "whatsapp",
+      "text": "Sir urgent requirement for waterproofing work at Amara Tower 2. Need to start ground floor and first floor toilets ASAP. Purvyakruti was doing mockup floor but for remaining floors we need new contractor. Pls send WO at earliest. - Arijit",
+      "from": "Arijit Dey",
+      "timestamp": "2026-11-15T09:30:00+05:30"
+    },
+    {
+      "id": "wa_02",
+      "type": "whatsapp",
+      "text": "Rahul sir, Aquina site road is in bad condition. We need permanent internal road from main gate to Tower-2 side. Matur Enterprise (Rajat da) can start by end of October. Need BOQ approval and work order. Load capacity should be 45MT as per fire authority. Paver block finish as per landscape architect plan.",
+      "from": "Molay Das",
+      "timestamp": "2026-10-20T14:15:00+05:30"
+    },
+    {
+      "id": "wa_03",
+      "type": "whatsapp",
+      "text": "Need cement urgently for Tower 3 column casting. 500 bags OPC 53 grade. Delivery by tomorrow if possible. Current stock only 50 bags left.",
+      "from": "Site Engineer",
+      "timestamp": "2026-11-18T07:45:00+05:30"
+    }
+  ],
+  "voice_transcriptions": [
+    {
+      "id": "vn_01",
+      "type": "voice_note",
+      "text": "Haan sir... yeh Amara Tower 2 ka waterproofing ka kaam hai... toilet aur kitchen dono ka karna hai... ground floor se lekar 23rd floor tak... total around 1200 square meter floor area hoga... aur wall bhi karna hai 450mm height tak... urgently chahiye sir... November se start karna hai",
+      "from": "Site Engineer (Amara)",
+      "timestamp": "2026-11-14T16:20:00+05:30",
+      "language": "Hindi-English mix"
+    },
+    {
+      "id": "vn_02",
+      "type": "voice_note",
+      "text": "Sir road work BOQ bhej raha hoon... Aquina project ka internal road hai main gate se Tower-2 tak... total length around 200 meter hoga... paver block finish chahiye... 45 ton load capacity rakhna hai fire authority ne bola hai... Matur Enterprise ko dena hai kaam... woh 21 Acres mein bhi road banaye the",
+      "from": "Dipon Senapati",
+      "timestamp": "2026-10-21T11:00:00+05:30",
+      "language": "Hindi-English mix"
+    }
+  ]
+}

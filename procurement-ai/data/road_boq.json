@@ -1,0 +1,608 @@
+{
+  "project": "AQUINA",
+  "sub_project": "Internal Road Work – Main Gate to Tower-2 (Flat-B side)",
+  "source": "BOQ / BOM of Road Work, Aquina dt. 16.10.2026",
+  "prepared_on": "16.10.2026",
+  "boq_items": [],
+  "measurement_book": [
+    {
+      "item_no": "",
+      "description": "CUMULATIVE MEASUREMENT – BASE AREAS",
+      "unit": "",
+      "measurements": [],
+      "total_quantity": null
+    },
+    {
+      "item_no": "",
+      "description": "PORTION A : MAIN GATE TO TOWER-2 CORNER PORTION (BELOW FLAT-B)",
+      "unit": "",
+      "measurements": [],
+      "total_quantity": null
+    },
+    {
+      "item_no": "",
+      "description": "Overall road area as per drawing (Main Gate to Tower-2 corner, below Flat-B)",
+      "unit": "sqm",
+      "measurements": [],
+      "total_quantity": null
+    },
+    {
+      "item_no": "",
+      "description": "SLUDGE REMOVING AREA (AVG. 150MM DEPTH) – PORTION A (East side passenger hoist portion)",
+      "unit": "",
+      "measurements": [],
+      "total_quantity": null
+    },
+    {
+      "item_no": "",
+      "description": "Stretch 1 (width = average of site readings)",
+      "unit": "sqm",
+      "measurements": [],
+      "total_quantity": null
+    },
+    {
+      "item_no": "",
+      "description": "Stretch 2 (width = average of site readings)",
+      "unit": "sqm",
+      "measurements": [],
+      "total_quantity": null
+    },
+    {
+      "item_no": "",
+      "description": "Stretch 3 (width = average of site readings)",
+      "unit": "sqm",
+      "measurements": [],
+      "total_quantity": null
+    },
+    {
+      "item_no": "",
+      "description": "Stretch 4 (width = average of site readings)",
+      "unit": "sqm",
+      "measurements": [],
+      "total_quantity": null
+    },
+    {
+      "item_no": "",
+      "description": "Stretch 5 (width = average of site readings)",
+      "unit": "sqm",
+      "measurements": [],
+      "total_quantity": null
+    },
+    {
+      "item_no": "",
+      "description": "Stretch 6 (width = average of site readings)",
+      "unit": "sqm",
+      "measurements": [],
+      "total_quantity": null
+    },
+    {
+      "item_no": "",
+      "description": "BALANCE AREA BESIDE POND (PORTION A less sludge area)",
+      "unit": "",
+      "measurements": [],
+      "total_quantity": null
+    },
+    {
+      "item_no": "",
+      "description": "Portion A overall area",
+      "unit": "sqm",
+      "measurements": [],
+      "total_quantity": null
+    },
+    {
+      "item_no": "",
+      "description": "Less : Sludge removing area",
+      "unit": "sqm",
+      "measurements": [],
+      "total_quantity": null
+    },
+    {
+      "item_no": "",
+      "description": "PORTION B : TOWER-2 CORNER (FLAT-B SIDE) TO BESIDE MAIN GATE",
+      "unit": "",
+      "measurements": [],
+      "total_quantity": null
+    },
+    {
+      "item_no": "",
+      "description": "Marked area X : Tower-2 corner (Flat-B side) to Ramp portion",
+      "unit": "sqm",
+      "measurements": [],
+      "total_quantity": null
+    },
+    {
+      "item_no": "",
+      "description": "Marked area Y : Ramp portion to beside Main Gate",
+      "unit": "sqm",
+      "measurements": [],
+      "total_quantity": null
+    },
+    {
+      "item_no": "",
+      "description": "CUMULATIVE MEASUREMENT – ITEM WISE (BOQ)",
+      "unit": "",
+      "measurements": [],
+      "total_quantity": null
+    },
+    {
+      "item_no": "1",
+      "description": "AVG. 150MM SLUDGE REMOVING – Portion A",
+      "unit": "",
+      "measurements": [],
+      "total_quantity": null
+    },
+    {
+      "item_no": "",
+      "description": "Sludge removing area (ref. base area above)",
+      "unit": "sqm",
+      "measurements": [],
+      "total_quantity": null
+    },
+    {
+      "item_no": "2",
+      "description": "200MM SILVER SAND FILLING – POND SIDE – Portion A",
+      "unit": "",
+      "measurements": [],
+      "total_quantity": null
+    },
+    {
+      "item_no": "",
+      "description": "Balance area beside pond x depth",
+      "unit": "cum",
+      "measurements": [],
+      "total_quantity": null
+    },
+    {
+      "item_no": "3",
+      "description": "100MM JHAMA BRICK (WBM) LAYING – SINGLE LAYER – Portion A",
+      "unit": "",
+      "measurements": [],
+      "total_quantity": null
+    },
+    {
+      "item_no": "",
+      "description": "Portion A road area",
+      "unit": "sqm",
+      "measurements": [],
+      "total_quantity": null
+    },
+    {
+      "item_no": "4",
+      "description": "30MM SILVER SAND BED BELOW PAVER BLOCK – Portion A",
+      "unit": "",
+      "measurements": [],
+      "total_quantity": null
+    },
+    {
+      "item_no": "",
+      "description": "Portion A road area",
+      "unit": "sqm",
+      "measurements": [],
+      "total_quantity": null
+    },
+    {
+      "item_no": "5",
+      "description": "60MM PAVER BLOCK LAYING – Portion A",
+      "unit": "",
+      "measurements": [],
+      "total_quantity": null
+    },
+    {
+      "item_no": "",
+      "description": "Portion A road area",
+      "unit": "sqm",
+      "measurements": [],
+      "total_quantity": null
+    },
+    {
+      "item_no": "6",
+      "description": "EARTHWORK IN EXCAVATION – Portion B (X+Y)",
+      "unit": "",
+      "measurements": [],
+      "total_quantity": null
+    },
+    {
+      "item_no": "",
+      "description": "Area (X+Y) x avg. depth (0.15+0.15+0.03+0.06+0.10)",
+      "unit": "cum",
+      "measurements": [],
+      "total_quantity": null
+    },
+    {
+      "item_no": "",
+      "description": "Add : 5% (as per source 'SAY' quantity)",
+      "unit": "cum",
+      "measurements": [],
+      "total_quantity": null
+    },
+    {
+      "item_no": "7",
+      "description": "150MM COMPACTED BRICK BATS FILLING – 1ST LAYER – Portion B",
+      "unit": "",
+      "measurements": [],
+      "total_quantity": null
+    },
+    {
+      "item_no": "",
+      "description": "Marked area X",
+      "unit": "sqm",
+      "measurements": [],
+      "total_quantity": null
+    },
+    {
+      "item_no": "",
+      "description": "Marked area Y",
+      "unit": "sqm",
+      "measurements": [],
+      "total_quantity": null
+    },
+    {
+      "item_no": "8",
+      "description": "AVG. 15MM STONE DUST SPREADING & COMPACTION – Portion B",
+      "unit": "",
+      "measurements": [
+        {
+          "no": 1,
+          "length": 1007.512,
+          "breadth": null,
+          "height": null,
+          "quantity": 1007.512,
+          "remarks": null
+        }
+      ],
+      "total_quantity": 1007.512
+    },
+    {
+      "item_no": "9",
+      "description": "150MM COMPACTED JHAMA BRICK FILLING – 2ND LAYER – Portion B",
+      "unit": "",
+      "measurements": [
+        {
+          "no": 1,
+          "length": 1007.512,
+          "breadth": null,
+          "height": null,
+          "quantity": 1007.512,
+          "remarks": null
+        }
+      ],
+      "total_quantity": 1007.512
+    },
+    {
+      "item_no": "10",
+      "description": "AVG. 30MM STONE DUST SPREADING & COMPACTION – Portion B",
+      "unit": "",
+      "measurements": [
+        {
+          "no": 1,
+          "length": 1007.512,
+          "breadth": null,
+          "height": null,
+          "quantity": 1007.512,
+          "remarks": null
+        }
+      ],
+      "total_quantity": 1007.512
+    },
+    {
+      "item_no": "11",
+      "description": "30MM SILVER SAND BED BELOW PAVER BLOCK – Portion B",
+      "unit": "",
+      "measurements": [
+        {
+          "no": 1,
+          "length": 1007.512,
+          "breadth": null,
+          "height": null,
+          "quantity": 1007.512,
+          "remarks": null
+        }
+      ],
+      "total_quantity": 1007.512
+    },
+    {
+      "item_no": "12",
+      "description": "60MM PAVER BLOCK LAYING – Portion B",
+      "unit": "",
+      "measurements": [
+        {
+          "no": 1,
+          "length": 1007.512,
+          "breadth": null,
+          "height": null,
+          "quantity": 1007.512,
+          "remarks": null
+        }
+      ],
+      "total_quantity": 1007.512
+    },
+    {
+      "item_no": "13",
+      "description": "KERB STONE (M8) 150 X 300 X 600 MM",
+      "unit": "",
+      "measurements": [],
+      "total_quantity": null
+    },
+    {
+      "item_no": "",
+      "description": "Beside pond",
+      "unit": "rmt",
+      "measurements": [],
+      "total_quantity": null
+    },
+    {
+      "item_no": "",
+      "description": "Sr. Citizen's pavilion",
+      "unit": "rmt",
+      "measurements": [],
+      "total_quantity": null
+    },
+    {
+      "item_no": "",
+      "description": "Corner of Tower-2 to ramp",
+      "unit": "rmt",
+      "measurements": [
+        {
+          "no": 1,
+          "length": 29.884,
+          "breadth": null,
+          "height": null,
+          "quantity": 29.884,
+          "remarks": null
+        }
+      ],
+      "total_quantity": 29.884
+    },
+    {
+      "item_no": "",
+      "description": "Ramp to Tower-1 stretcher lift",
+      "unit": "rmt",
+      "measurements": [],
+      "total_quantity": null
+    },
+    {
+      "item_no": "",
+      "description": "Near main gate",
+      "unit": "rmt",
+      "measurements": [],
+      "total_quantity": null
+    },
+    {
+      "item_no": "14",
+      "description": "SAUCER DRAIN (M13) 600 X 300 X 100 MM",
+      "unit": "",
+      "measurements": [],
+      "total_quantity": null
+    },
+    {
+      "item_no": "",
+      "description": "Beside pond",
+      "unit": "rmt",
+      "measurements": [],
+      "total_quantity": null
+    }
+  ],
+  "bill_of_materials": [
+    {
+      "sl_no": 1,
+      "boq_sl_no": 2,
+      "boq_item": "200MM SILVER SAND FILLING - POND SIDE",
+      "material": "SILVER SAND",
+      "quantity": 87.555,
+      "thickness_m": null,
+      "net_material_qty": 3091.5670500000006,
+      "material_uom": "CFT",
+      "wastage_pct": 0.25,
+      "total_qty_with_wastage": 3864.458812500001,
+      "basis": "Qty already in CUM (area x 0.20) x 35.31"
+    },
+    {
+      "sl_no": 2,
+      "boq_sl_no": 3,
+      "boq_item": "100MM JHAMA BRICK (WBM) LAYING",
+      "material": "JHAMA BRICKS",
+      "quantity": 1088.208,
+      "thickness_m": 0.1,
+      "net_material_qty": 3842.462448000001,
+      "material_uom": "CFT",
+      "wastage_pct": 0.4,
+      "total_qty_with_wastage": 5379.447427200002,
+      "basis": "Area x 0.10 x 35.31"
+    },
+    {
+      "sl_no": 3,
+      "boq_sl_no": 3,
+      "boq_item": "100MM JHAMA BRICK (WBM) LAYING",
+      "material": "STONE DUST",
+      "quantity": 1088.208,
+      "thickness_m": 0.055,
+      "net_material_qty": 2113.3543464000004,
+      "material_uom": "CFT",
+      "wastage_pct": 0.2,
+      "total_qty_with_wastage": 2536.02521568,
+      "basis": "Area x (0.015+0.040) x 35.31"
+    },
+    {
+      "sl_no": 4,
+      "boq_sl_no": 4,
+      "boq_item": "30MM SILVER SAND BED BELOW PAVER BLOCK",
+      "material": "SILVER SAND",
+      "quantity": 1088.208,
+      "thickness_m": 0.03,
+      "net_material_qty": 1152.7387344,
+      "material_uom": "CFT",
+      "wastage_pct": 0.25,
+      "total_qty_with_wastage": 1440.923418,
+      "basis": "Area x 0.03 x 35.31"
+    },
+    {
+      "sl_no": 5,
+      "boq_sl_no": 5,
+      "boq_item": "60MM PAVER BLOCK",
+      "material": "PAVER BLOCK 60MM",
+      "quantity": 1088.208,
+      "thickness_m": null,
+      "net_material_qty": 1088.208,
+      "material_uom": "SQM",
+      "wastage_pct": 0.1,
+      "total_qty_with_wastage": 1197.0288000000003,
+      "basis": "Laid area"
+    },
+    {
+      "sl_no": 6,
+      "boq_sl_no": 7,
+      "boq_item": "150MM COMPACTED BRICK BATS FILLING - 1ST LAYER",
+      "material": "BRICK BATS",
+      "quantity": 1007.512,
+      "thickness_m": 0.15,
+      "net_material_qty": 6937.1735004,
+      "material_uom": "CFT",
+      "wastage_pct": 0.4,
+      "total_qty_with_wastage": 9712.04290056,
+      "basis": "Area x 0.15 x 1.30 x 35.31"
+    },
+    {
+      "sl_no": 7,
+      "boq_sl_no": 8,
+      "boq_item": "AVG. 15MM STONE DUST SPREADING & COMPACTION",
+      "material": "STONE DUST",
+      "quantity": 1007.512,
+      "thickness_m": 0.015,
+      "net_material_qty": 613.67304042,
+      "material_uom": "CFT",
+      "wastage_pct": 0.2,
+      "total_qty_with_wastage": 736.407648504,
+      "basis": "Area x 0.015 x 1.15 x 35.31"
+    },
+    {
+      "sl_no": 8,
+      "boq_sl_no": 9,
+      "boq_item": "150MM COMPACTED JHAMA BRICK FILLING - 2ND LAYER",
+      "material": "JHAMA BRICKS",
+      "quantity": 1007.512,
+      "thickness_m": 0.15,
+      "net_material_qty": 6403.544769599999,
+      "material_uom": "CFT",
+      "wastage_pct": 0.4,
+      "total_qty_with_wastage": 8964.962677439999,
+      "basis": "Area x 0.15 x 1.20 x 35.31"
+    },
+    {
+      "sl_no": 9,
+      "boq_sl_no": 10,
+      "boq_item": "AVG. 30MM STONE DUST SPREADING & COMPACTION",
+      "material": "STONE DUST",
+      "quantity": 1007.512,
+      "thickness_m": 0.03,
+      "net_material_qty": 1227.34608084,
+      "material_uom": "CFT",
+      "wastage_pct": 0.2,
+      "total_qty_with_wastage": 1472.815297008,
+      "basis": "Area x 0.03 x 1.15 x 35.31"
+    },
+    {
+      "sl_no": 10,
+      "boq_sl_no": 11,
+      "boq_item": "30MM SILVER SAND BED BELOW PAVER BLOCK",
+      "material": "SILVER SAND",
+      "quantity": 1007.512,
+      "thickness_m": 0.03,
+      "net_material_qty": 1334.0718270000002,
+      "material_uom": "CFT",
+      "wastage_pct": 0.25,
+      "total_qty_with_wastage": 1667.5897837500002,
+      "basis": "Area x 0.03 x 1.25 x 35.31"
+    },
+    {
+      "sl_no": 11,
+      "boq_sl_no": 12,
+      "boq_item": "60MM PAVER BLOCK",
+      "material": "PAVER BLOCK 60MM",
+      "quantity": 1007.512,
+      "thickness_m": null,
+      "net_material_qty": 1007.512,
+      "material_uom": "SQM",
+      "wastage_pct": 0.1,
+      "total_qty_with_wastage": 1108.2632,
+      "basis": "Laid area"
+    },
+    {
+      "sl_no": 12,
+      "boq_sl_no": 13,
+      "boq_item": "KERB STONE (M8) 150X300X600",
+      "material": "KERB STONE M8",
+      "quantity": 230.20600000000002,
+      "thickness_m": null,
+      "net_material_qty": 767.3533333333335,
+      "material_uom": "NOS",
+      "wastage_pct": 0.1,
+      "total_qty_with_wastage": 844.0886666666669,
+      "basis": "Length / 0.3 m (as per source indent)"
+    },
+    {
+      "sl_no": 13,
+      "boq_sl_no": 14,
+      "boq_item": "KERB STONE (M10A) 300X150X600",
+      "material": "KERB STONE M10A",
+      "quantity": 12.540000000000001,
+      "thickness_m": null,
+      "net_material_qty": 41.800000000000004,
+      "material_uom": "NOS",
+      "wastage_pct": 0.02,
+      "total_qty_with_wastage": 42.636,
+      "basis": ""
+    },
+    {
+      "sl_no": 14,
+      "boq_sl_no": 15,
+      "boq_item": "SAUCER DRAIN (M13) 600X300X100",
+      "material": "SAUCER DRAIN M13",
+      "quantity": 291.441,
+      "thickness_m": null,
+      "net_material_qty": 291.441,
+      "material_uom": "RMT",
+      "wastage_pct": 0.05,
+      "total_qty_with_wastage": 306.01304999999996,
+      "basis": "Laid length"
+    },
+    {
+      "sl_no": 15,
+      "boq_sl_no": 16,
+      "boq_item": "FIXING OF PAVER BLOCK (200X200X60)",
+      "material": "CONC. PAVER BLOCK",
+      "quantity": 1440,
+      "thickness_m": null,
+      "net_material_qty": 1440,
+      "material_uom": "SQM",
+      "wastage_pct": 0.1,
+      "total_qty_with_wastage": 1584.0000000000002,
+      "basis": ""
+    },
+    {
+      "sl_no": 16,
+      "boq_sl_no": 17,
+      "boq_item": "FIXING OF PAVER BLOCK (200X100X60)",
+      "material": "CONC. PAVER BLOCK",
+      "quantity": 176,
+      "thickness_m": null,
+      "net_material_qty": 176,
+      "material_uom": "SQM",
+      "wastage_pct": 0.1,
+      "total_qty_with_wastage": 193.60000000000002,
+      "basis": ""
+    },
+    {
+      "sl_no": 17,
+      "boq_sl_no": 18,
+      "boq_item": "VDF WORK",
+      "material": "VDF",
+      "quantity": 310,
+      "thickness_m": null,
+      "net_material_qty": 310,
+      "material_uom": "SQM",
+      "wastage_pct": 0.05,
+      "total_qty_with_wastage": 325.5,
+      "basis": ""
+    }
+  ]
+}

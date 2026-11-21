@@ -1,0 +1,384 @@
+{
+  "ERP ITEM CODE": [
+    {
+      "Sl No": 1,
+      "Item Code": "WP.UGR.A",
+      "Item Description": "UGR Outside Wall Area-Methodology-1"
+    },
+    {
+      "Sl No": 2,
+      "Item Code": "WP.UGR.B",
+      "Item Description": "UGR Outside Wall Area-Methodology-2"
+    },
+    {
+      "Sl No": 3,
+      "Item Code": "WP.UGR.C",
+      "Item Description": "UGR Inside Floor & Wall Area "
+    },
+    {
+      "Sl No": 4,
+      "Item Code": "WP.STP.A",
+      "Item Description": "STP Outside Wall Area "
+    },
+    {
+      "Sl No": 5,
+      "Item Code": "WP.STP.B",
+      "Item Description": "STP Inside Wall & Floor Area "
+    },
+    {
+      "Sl No": 6,
+      "Item Code": "STP_UGR",
+      "Item Description": "Nozzle grouting at all construction joints"
+    },
+    {
+      "Sl No": 7,
+      "Item Code": "STP_UGR_01",
+      "Item Description": "Neat Cement Punning Work"
+    },
+    {
+      "Sl No": 8,
+      "Item Code": "W.P",
+      "Item Description": "WATER PROOFING WORK (UGR, STP & LIFT PIT)"
+    },
+    {
+      "Sl No": 9,
+      "Item Code": "W.P.01",
+      "Item Description": "Water Proofing LIFT PIT/UGR/STP/WALL"
+    },
+    {
+      "Sl No": 10,
+      "Item Code": "W.P.02",
+      "Item Description": "Waterproofing work in Lift Pit/UGR/STP floor"
+    },
+    {
+      "Sl No": 11,
+      "Item Code": "W.P.03",
+      "Item Description": "Grouting at all construction joints"
+    },
+    {
+      "Sl No": 12,
+      "Item Code": "W.P.04",
+      "Item Description": "Neat Cement Punning Work"
+    },
+    {
+      "Sl No": 13,
+      "Item Code": "W.P.05",
+      "Item Description": "Screed Concrete Work"
+    },
+    {
+      "Sl No": 14,
+      "Item Code": "W.P-.1",
+      "Item Description": "REPAIRING WORK FOR WATERPROOFING"
+    },
+    {
+      "Sl No": 15,
+      "Item Code": "WP.01.A",
+      "Item Description": "WATERPROOFING AT TOILET FLOOR-A"
+    },
+    {
+      "Sl No": 16,
+      "Item Code": "WP.02.A",
+      "Item Description": "WATERPROOFING AT TOILET WALL (UPTO 450 MM HIGHT)-A"
+    },
+    {
+      "Sl No": 17,
+      "Item Code": "WP.04.A",
+      "Item Description": "WATERPROOFING AT KITCHEN FLOOR-A"
+    },
+    {
+      "Sl No": 18,
+      "Item Code": "WP.05.A",
+      "Item Description": "WATERPROOFING AT KITCHEN WALL-A"
+    },
+    {
+      "Sl No": 19,
+      "Item Code": "WP.06.A",
+      "Item Description": "WATERPROOFING AT BALCONY FLOOR-A"
+    },
+    {
+      "Sl No": 20,
+      "Item Code": "WP.07.A",
+      "Item Description": "WATERPROOFING WORKS {BALCONY WALL (UPTO 200 MM HIGHT)} Providing and applying integral multi-layer waterproofing treatment on vertical and horizontal surfaces of depressed portions of W.C., bathrooms, kitchens, balconies, stilts, etc., including surface preparation, cleaning, and sealing of all junctions, joints, corners and pipe penetrations, consisting of: (a) first course of cement slurry @ 4.4 kg/sqm mixed with IS:2645 approved integral waterproofing compound, applied to prepared RCC/Masonry surface, (b) second course of 20 mm thick cement plaster in 1:3 (1 cement : 3 coarse sand) mixed with waterproofing compound in recommended proportion, including rounding off the junction of vertical and horizontal faces, (c) third course of three coats of polymer modified slurry/face concrete, each coat mixed with neat cement as per manufacturer’s instructions to ensure dense impermeable surface, and (d) fourth course of 10 mm thick protective cement plaster in 1:4 (1 cement : 4 coarse sand) mixed with waterproofing compound, finishing smooth, including curing, all scaffolding, labour, tools and tackles, handling of materials, making good adjoining surfaces, ensuring watertightness and completing the treatment in all respects, all conforming to IS:2645 and manufacturer’s specifications, as directed by the Engineer-in-Charge."
+    },
+    {
+      "Sl No": 21,
+      "Item Code": "WP.08.A",
+      "Item Description": "WATERPROOFING AT OT FLOOR & WALL"
+    },
+    {
+      "Sl No": 22,
+      "Item Code": "WP.01.B",
+      "Item Description": "WATERPROOFING AT TOILET FLOOR-B"
+    },
+    {
+      "Sl No": 23,
+      "Item Code": "WP.02.B",
+      "Item Description": "WATERPROOFING AT TOILET WALL (UPTO 450 MM HIGHT)-B"
+    },
+    {
+      "Sl No": 24,
+      "Item Code": "WP.04.B",
+      "Item Description": "WATERPROOFING AT KITCHEN FLOOR-B"
+    },
+    {
+      "Sl No": 25,
+      "Item Code": "WP.05.B",
+      "Item Description": "WATERPROOFING AT KITCHEN WALL-B"
+    },
+    {
+      "Sl No": 26,
+      "Item Code": "WP.06.B",
+      "Item Description": "WATERPROOFING AT BALCONY FLOOR-B"
+    },
+    {
+      "Sl No": 27,
+      "Item Code": "WP.07.B",
+      "Item Description": "WATERPROOFING WORKS {BALCONY WALL (UPTO 200 MM HIGHT)}"
+    },
+    {
+      "Sl No": 28,
+      "Item Code": "WP.08.B",
+      "Item Description": "WATERPROOFING AT OT FLOOR & WALL"
+    },
+    {
+      "Sl No": 29,
+      "Item Code": "WP.09.B",
+      "Item Description": "WATERPROOFING AT ROOF & MUMPTY TOP FLOOR & WALL"
+    },
+    {
+      "Sl No": 30,
+      "Item Code": "W.P-COBA",
+      "Item Description": "WATERPROOFING WITH BRICK BAT COBA"
+    },
+    {
+      "Sl No": 31,
+      "Item Code": "WP.10.B",
+      "Item Description": "OWHT TANK FLOOR & WALL WATERPROOFING"
+    },
+    {
+      "Sl No": 32,
+      "Item Code": "WP.11.B",
+      "Item Description": "*NOZZLE GROUTING (IF REQUIRED)"
+    },
+    {
+      "Sl No": 33,
+      "Item Code": "WP.11.B_",
+      "Item Description": "NOZZLE GROUTING (*IF REQUIRED)"
+    },
+    {
+      "Sl No": 34,
+      "Item Code": "WP.EXP.01",
+      "Item Description": "Expansion Joint Polysulphide Treatment"
+    },
+    {
+      "Sl No": 35,
+      "Item Code": "W.P.08",
+      "Item Description": "75 MM SCREED CONCRETE WORK ABOVE ROOF"
+    },
+    {
+      "Sl No": 36,
+      "Item Code": "WP.RC",
+      "Item Description": "CONCRETE PUMPING WORK (SCREED CONCRETE)"
+    },
+    {
+      "Sl No": 37,
+      "Item Code": "WP.RC.1",
+      "Item Description": "CONCRETE PUMP CHARGES-B"
+    },
+    {
+      "Sl No": 38,
+      "Item Code": "WP.11.B",
+      "Item Description": "*NOZZLE GROUTING (IF REQUIRED)"
+    },
+    {
+      "Sl No": 39,
+      "Item Code": "W.P.11B",
+      "Item Description": "Epoxy Tar Based Coating Nitocote ET 550 for S.T.P "
+    },
+    {
+      "Sl No": 40,
+      "Item Code": "W.P.01",
+      "Item Description": "Water Proofing LIFT PIT/UGR/STP/WALL"
+    },
+    {
+      "Sl No": 41,
+      "Item Code": "W.P.02",
+      "Item Description": "Waterproofing work in Lift Pit/UGR/STP floor"
+    },
+    {
+      "Sl No": 42,
+      "Item Code": "W.P.03",
+      "Item Description": "Grouting at all construction joints"
+    },
+    {
+      "Sl No": 43,
+      "Item Code": "W.P.04",
+      "Item Description": "Neat Cement Punning Work"
+    },
+    {
+      "Sl No": 44,
+      "Item Code": "W.P.05",
+      "Item Description": "Screed Concrete Work"
+    },
+    {
+      "Sl No": 45,
+      "Item Code": "WP.01",
+      "Item Description": "WATERPROOFING AT TOILET FLOOR"
+    },
+    {
+      "Sl No": 46,
+      "Item Code": "WP.02",
+      "Item Description": "WATERPROOFING AT TOILET WALL (UPTO 450 MM HIGHT)"
+    },
+    {
+      "Sl No": 47,
+      "Item Code": "WP.03",
+      "Item Description": "SUPPLY & APPLICATION OF WATERPROOFING COMPOUND ON TOILET DEPRESSION CHANNEL"
+    },
+    {
+      "Sl No": 48,
+      "Item Code": "WP.04",
+      "Item Description": "WATERPROOFING AT KITCHEN FLOOR"
+    },
+    {
+      "Sl No": 49,
+      "Item Code": "WP.05",
+      "Item Description": "WATERPROOFING AT KITCHEN WALL"
+    },
+    {
+      "Sl No": 50,
+      "Item Code": "WP.06",
+      "Item Description": "WATERPROOFING AT BALCONY FLOOR"
+    },
+    {
+      "Sl No": 51,
+      "Item Code": "WP.07",
+      "Item Description": "WATERPROOFING AT BALCONY WALL (UPTO 200 MM HIGHT)"
+    },
+    {
+      "Sl No": 52,
+      "Item Code": "WP.08",
+      "Item Description": "PRESSURE GROUTING INSIDE R.C.C FLOOR & WALL"
+    },
+    {
+      "Sl No": 53,
+      "Item Code": "WP.09",
+      "Item Description": "SCREED CONCRETE IN FLOOR (TOILET & BALCONY)"
+    },
+    {
+      "Sl No": 54,
+      "Item Code": "WP.01.A",
+      "Item Description": "WATERPROOFING AT TOILET FLOOR-A"
+    },
+    {
+      "Sl No": 55,
+      "Item Code": "WP.02.A",
+      "Item Description": "WATERPROOFING AT TOILET WALL (UPTO 450 MM HIGHT)-A"
+    },
+    {
+      "Sl No": 56,
+      "Item Code": "WP.04.A",
+      "Item Description": "WATERPROOFING AT KITCHEN FLOOR-A"
+    },
+    {
+      "Sl No": 57,
+      "Item Code": "WP.05.A",
+      "Item Description": "WATERPROOFING AT KITCHEN WALL-A"
+    },
+    {
+      "Sl No": 58,
+      "Item Code": "WP.06.A",
+      "Item Description": "WATERPROOFING AT BALCONY FLOOR-A"
+    },
+    {
+      "Sl No": 59,
+      "Item Code": "WP.07.A",
+      "Item Description": "WATERPROOFING WORKS {BALCONY WALL (UPTO 200 MM HIGHT)} Providing and applying integral multi-layer waterproofing treatment on vertical and horizontal surfaces of depressed portions of W.C., bathrooms, kitchens, balconies, stilts, etc., including surface preparation, cleaning, and sealing of all junctions, joints, corners and pipe penetrations, consisting of: (a) first course of cement slurry @ 4.4 kg/sqm mixed with IS:2645 approved integral waterproofing compound, applied to prepared RCC/Masonry surface, (b) second course of 20 mm thick cement plaster in 1:3 (1 cement : 3 coarse sand) mixed with waterproofing compound in recommended proportion, including rounding off the junction of vertical and horizontal faces, (c) third course of three coats of polymer modified slurry/face concrete, each coat mixed with neat cement as per manufacturer’s instructions to ensure dense impermeable surface, and (d) fourth course of 10 mm thick protective cement plaster in 1:4 (1 cement : 4 coarse sand) mixed with waterproofing compound, finishing smooth, including curing, all scaffolding, labour, tools and tackles, handling of materials, making good adjoining surfaces, ensuring watertightness and completing the treatment in all respects, all conforming to IS:2645 and manufacturer’s specifications, as directed by the Engineer-in-Charge."
+    },
+    {
+      "Sl No": 60,
+      "Item Code": "W.P-.1",
+      "Item Description": "REPAIRING WORK FOR WATERPROOFING"
+    },
+    {
+      "Sl No": 61,
+      "Item Code": "W.P-COBA",
+      "Item Description": "WATERPROOFING WITH BRICK BAT COBA"
+    },
+    {
+      "Sl No": 62,
+      "Item Code": "WP.01.B",
+      "Item Description": "WATERPROOFING AT TOILET FLOOR-B"
+    },
+    {
+      "Sl No": 63,
+      "Item Code": "WP.02.B",
+      "Item Description": "WATERPROOFING AT TOILET WALL (UPTO 450 MM HIGHT)-B"
+    },
+    {
+      "Sl No": 64,
+      "Item Code": "WP.03.B",
+      "Item Description": "WATERPROOFING AT KITCHEN FLOOR-B"
+    },
+    {
+      "Sl No": 65,
+      "Item Code": "WP.04.B",
+      "Item Description": "WATERPROOFING AT KITCHEN WALL-B"
+    },
+    {
+      "Sl No": 66,
+      "Item Code": "WP.05.B",
+      "Item Description": "WATERPROOFING AT BALCONY FLOOR-B"
+    },
+    {
+      "Sl No": 67,
+      "Item Code": "WP.06.B",
+      "Item Description": "WATERPROOFINWORKS {BALCONY WALL (UPTO 200 MM HIGHT)}"
+    },
+    {
+      "Sl No": 68,
+      "Item Code": "WP.07.B",
+      "Item Description": "WATERPROOFING AT OT FLOOR & WALL"
+    },
+    {
+      "Sl No": 69,
+      "Item Code": "WP.EXP.01",
+      "Item Description": "Hypalon Expansion Joint Treatment"
+    },
+    {
+      "Sl No": 70,
+      "Item Code": "W.P.06",
+      "Item Description": "EXPENSION JOINT ALUMINIUM SHEET FIXING"
+    },
+    {
+      "Sl No": 71,
+      "Item Code": "W.P.07",
+      "Item Description": "EXTRA FOR 300 MM COMBIFLEX TAPE SUPPLY & FIXING"
+    },
+    {
+      "Sl No": 72,
+      "Item Code": "W.P.08",
+      "Item Description": "75 MM SCREED CONCRETE WORK ABOVE ROOF"
+    },
+    {
+      "Sl No": 73,
+      "Item Code": "W.P.09",
+      "Item Description": "PROVIDING & APPLYING SEALENT AT EXPENSION JOINT TILES GAP"
+    },
+    {
+      "Sl No": 74,
+      "Item Code": "WP.MR",
+      "Item Description": "Scaffolding charges"
+    },
+    {
+      "Sl No": 75,
+      "Item Code": "WP.RC",
+      "Item Description": "CONCRETE PUMPING WORK (SCREED CONCRETE)"
+    },
+    {
+      "Sl No": 76,
+      "Item Code": "WP.RC1",
+      "Item Description": "CONCRETE PUMPING WORK (SCREED CONCRETE)-1"
+    }
+  ]
+}

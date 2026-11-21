@@ -1,0 +1,46 @@
+{
+  "site_requirements": [
+    {
+      "id": "req_waterproofing_amara_t2",
+      "project": "Amara",
+      "category": "Waterproofing",
+      "scope": "Tower-2",
+      "source": "email",
+      "from": "Vinayak Amara / Arijit Dey (QS & Billing Engineer)",
+      "to": "Soham Saha (Sr. Engineer, Contracts & Planning)",
+      "date": "2026-11-16",
+      "description": "Internal waterproofing works for Tower 2 - Ground Floor, 1st Floor, 3rd Floor onwards including all typical floors. Scope includes waterproofing of all toilets/W.C., kitchens, wash areas, balconies, open terraces and F.R.P. works.",
+      "timeline": "November 2026 to June 2028",
+      "note": "Mock-up floor waterproofing by Purvyakruti as approved. Other floors to be finalized after tender evaluation.",
+      "attachment": "A_Amara_Waterproofing_quantities_Tower-2.xlsx"
+    },
+    {
+      "id": "req_road_work_aquina",
+      "project": "Aquina",
+      "category": "Road Work",
+      "scope": "Internal Road",
+      "source": "email",
+      "from": "Dipon Senapati (QS & Billing Engineer)",
+      "to": "Vinayak Projects",
+      "date": "2026-10-22",
+      "description": "Internal road work for Aquina Project. Permanent road with paver-block finish, designed for 45 MT load capacity as per Fire Authority FSR recommendation.",
+      "commencement_date": "2026-10-26",
+      "completion_date": "2027-03-31",
+      "recommended_contractor": "Matur Enterprise (Rajat Da, existing road contractor of Vinayak 21 Acres)",
+      "attachment": "B_BOQ_Internal_Road_Work_Aquina.xlsx, B_Internal_Road_Aquina_drawing.pdf"
+    }
+  ],
+  "rfq_template": {
+    "subject": "SEEKING QUOTATION FOR {WORK_TYPE} WORK AT VINAYAK {PROJECT}",
+    "from": "Soham Saha, Sr. Engineer, Contracts & Planning, Vinayak Group",
+    "standard_terms": [
+      "PF & ESI registration required.",
+      "TDS will be deducted as per Govt. norms.",
+      "5% Security deposit will be released after 12 months of total completion of work.",
+      "GST will be paid extra.",
+      "Water & Electricity at a point and Labour hutment will be provided.",
+      "Safety PPE cost will be under Contractor's scope."
+    ],
+    "body": "Please find attached the description of work along with this mail. You are requested to kindly submit your commercial quotation in accordance with the specifications mentioned in the attached file as well as below mentioned points."
+  }
+}
